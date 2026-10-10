@@ -1,0 +1,27 @@
+﻿{
+    "RoleName": "boond-ApiFunctionRole-Fy05wOfx1Dhi",
+    "PolicyName": "ApiFunctionRolePolicy0",
+    "PolicyDocument": {
+        "Statement": [
+            {
+                "Action": [
+                    "dynamodb:GetItem",
+                    "dynamodb:DeleteItem",
+                    "dynamodb:PutItem",
+                    "dynamodb:Scan",
+                    "dynamodb:Query",
+                    "dynamodb:UpdateItem",
+                    "dynamodb:BatchWriteItem",
+                    "dynamodb:BatchGetItem",
+                    "dynamodb:DescribeTable",
+                    "dynamodb:ConditionCheckItem"
+                ],
+                "Resource": [
+                    "arn:aws:dynamodb:ap-southeast-2:036019072993:table/boond-Table-185DEERJ6MCUZ",
+                    "arn:aws:dynamodb:ap-southeast-2:036019072993:table/boond-Table-185DEERJ6MCUZ/index/*"
+                ],
+                "Effect": "Allow"
+            }
+        ]
+    }
+}

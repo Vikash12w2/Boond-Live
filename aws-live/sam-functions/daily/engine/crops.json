@@ -1,0 +1,445 @@
+{
+  "_meta": {
+    "about": "Crop parameters for the Boond FAO-56 single-Kc water-balance engine. Keys beginning with '_' are documentation and must be ignored by the engine and the onboarding form.",
+    "day_counting": "All day numbers are days after sowing (DAS) for wheat and cotton, days after transplanting (DAT) for paddy, and days after planting (DAP) for sugarcane. Day 1 = sowing/transplanting/planting date.",
+    "kc_interpolation": "Kc is constant within 'initial' and 'mid' and linear from kc_start to kc_end within 'development' and 'late' (FAO-56 Fig. 25 / Eq. 66).",
+    "root_growth": "Zr grows linearly from root_depth.initial_m on day 1 to root_depth.maximum_m on root_depth.full_depth_day, then stays constant (ASSUMPTION; FAO-56 Ch. 8 says Zr increases with crop development but gives no single law).",
+    "legacy_keys_kept": "total_days, stages, heat_thresholds, depletion_fraction, root_depth are kept in the same shape as the original crops.json so existing kc.py / water_balance.py keep working.",
+    "version": "2026-10-09"
+  },
+
+  "wheat": {
+    "_label": "Wheat, irrigated, timely sown (25 Oct - 21 Nov), Punjab/Haryana. RECOMMENDED DEFAULT for Boond.",
+    "_why_not_120_days": "PAU's recommended timely-sown varieties mature in 145-158 days (e.g. PBW 826 148 d, HD 3086 148 d, DBW 187 153 d, Unnat PBW 343 155 d). FAO-56's 15/25/50/30 = 120 d row is for Central India. Stage lengths below are the mean of the 28 Oct and 4 Nov sowings measured at PAU Ludhiana (Kaur et al. 2017).",
+    "crop_family": "upland",
+    "total_days": 145,
+    "stages": {
+      "initial":     { "days": 24, "kc_start": 0.40, "kc_end": 0.40 },
+      "development": { "days": 44, "kc_start": 0.40, "kc_end": 1.15 },
+      "mid":         { "days": 47, "kc_start": 1.15, "kc_end": 1.15 },
+      "late":        { "days": 30, "kc_start": 1.15, "kc_end": 0.30 }
+    },
+    "_kc_notes": "Kc mid 1.15 and Kc end 0.25-0.40 from FAO-56 Table 12 (spring wheat). Kc ini raised from the FAO table value 0.30 to 0.40 because the soil is wetted by a ~10 cm pre-sowing irrigation and a first irrigation ~3 weeks later; PAU Ludhiana measured Kc ini 0.39 for 28 Oct sowing (Kaur et al. 2017). Use 0.30 if you want to match FAO Table 12 exactly. Kc end 0.30 = mid of FAO range (machine-harvested crop -> lower end).",
+    "kc_local_measured": {
+      "_source": "Kaur, Gill, Kaur & Aggarwal (2017) J. Agrometeorology 19(2):170-171, PAU Ludhiana; sowing 28 Oct -> 2 Dec",
+      "kc_ini_range": [0.39, 0.55],
+      "kc_mid_range": [1.17, 1.26],
+      "kc_end_range": [0.26, 0.36],
+      "use": "sensitivity test only; not the default"
+    },
+    "heat_thresholds": { "flowering": 31.0, "grain_filling": 35.0 },
+    "heat_windows": [
+      { "name": "flowering",     "day_start": 92,  "day_end": 110, "tmax_threshold_c": 31.0 },
+      { "name": "grain_filling", "day_start": 106, "day_end": 140, "tmax_threshold_c": 35.0 }
+    ],
+    "_heat_window_derivation": "PAU Ludhiana 2023-24 (Kaur et al. 2025, Indian J. Agronomy 70(4)): heading at 96 DAS (6 Nov sowing) and 99 DAS (24 Nov); soft dough 115-119 DAS; physiological maturity 146-154 DAS. Anthesis taken as heading -4 to +11 days (ASSUMPTION: anthesis normally follows heading by about a week). Grain filling = anthesis to just before physiological maturity. Thresholds: 31 C near anthesis (Porter & Gawith 1999, also cited by PAU's Kang et al. 2017) and ~35 C in grain filling (Porter & Gawith 1999; same values as your concept doc's IMD MAUSAM paper).",
+    "depletion_fraction": 0.55,
+    "depletion_fraction_by_stage": null,
+    "root_depth": { "initial_m": 0.30, "maximum_m": 1.00, "full_depth_day": 68 },
+    "_root_notes": "FAO-56 Table 22: spring wheat Zr 1.0-1.5 m, p 0.55 (at ETc ~5 mm/d). Lower end 1.0 m used, as your spec says. full_depth_day = end of development stage (ASSUMPTION).",
+    "irrigation": {
+      "checkin_depth_mm": { "light": 50, "normal": 75, "heavy": 100 },
+      "max_advised_depth_mm": 75,
+      "pre_sowing_irrigation_mm": 100,
+      "first_irrigation_das": { "october_sown": 21, "later_sown": 28 },
+      "_source": "PAU Package of Practices Rabi 2025-26 p.17: 'heavy pre-sowing irrigation of about 10 cm' (not after rice); first irrigation 'relatively light', 3 weeks after sowing for October-sown and 4 weeks for later-sown; later irrigations 7.5 cm; timely-sown crop may be irrigated up to end of March, crops sown after 5 Dec up to 10 April. 'light' 50 mm is an ASSUMPTION (2/3 of normal)."
+    },
+    "sowing_window": { "start": "10-22", "optimum": ["11-01", "11-15"], "end": "11-21" },
+    "stop_irrigation": {
+      "last_irrigation_date": "03-31",
+      "if_sown_after": { "date": "12-05", "last_irrigation_date": "04-10" },
+      "_source": "PAU Rabi 2025-26 p.17: timely-sown wheat may be irrigated up to the end of March, wheat sown after 5 December up to 10 April. After that date Boond advises no irrigation, heat irrigation included."
+    },
+    "critical_water_stages": ["CRI (~20-22 DAS)", "tillering/jointing", "booting-heading", "anthesis", "milk/early grain fill"],
+    "ky_fao33": { "initial": 0.2, "development": 0.65, "mid": 0.55, "late": null, "total": 1.05 },
+    "_ky_note": "Yield-response factors from FAO Irrigation & Drainage Paper 33 via FAO Land & Water wheat page. Only needed if you later estimate yield loss from stress days (not in the must-work scope).",
+    "critical_irrigation": {
+      "name": "CRI",
+      "day_if_sown_in_october": 21,
+      "day_if_sown_later": 28,
+      "window_days": 7,
+      "skip_if_water_since_sowing_mm": 25,
+      "depth_mm": 50,
+      "_source": "PAU Rabi 2025-26 p.17: first irrigation 'relatively light', 3 weeks after sowing for October-sown and 4 weeks for later-sown wheat (crown root initiation). A soil-water balance alone never triggers it when the root zone starts full. ASSUMPTIONS: skipped if at least 25 mm of effective rain or irrigation has reached the field since sowing; window 7 days; depth 50 mm (= the light check-in depth)."
+    },
+    "max_crop_height_m": 1.0,
+    "validation_targets": {
+      "seasonal_etc_mm": [280, 450],
+      "_note": "Lower bound lowered from 350 to 280 mm after the real 2021-22 Ludhiana replay (Open-Meteo ERA5 archive) gave 286 mm stress-free ETc. ASSUMPTION/sanity range for Punjab timely-sown wheat: FAO gives 450-650 mm for high-yield wheat worldwide; a drip-wheat study at Jalandhar (Sharma et al. 2024) implies ~325 mm crop ET over 133 days; PAU's schedule = 10 cm pre-sowing + ~4 x 7.5 cm + winter rain. If your 2021-22 replay gives seasonal ETc far outside 300-500 mm, check ET0 units or the Kc curve."
+    }
+  },
+
+  "wheat_late": {
+    "_label": "Wheat, late sown (22 Nov - 20 Dec), Punjab. Use when the farmer's sowing date is after 21 Nov.",
+    "crop_family": "upland",
+    "total_days": 133,
+    "stages": {
+      "initial":     { "days": 25, "kc_start": 0.40, "kc_end": 0.40 },
+      "development": { "days": 45, "kc_start": 0.40, "kc_end": 1.15 },
+      "mid":         { "days": 35, "kc_start": 1.15, "kc_end": 1.15 },
+      "late":        { "days": 28, "kc_start": 1.15, "kc_end": 0.30 }
+    },
+    "_stage_source": "Kaur et al. (2017) PAU Ludhiana, 25 Nov sowing: 25/45/35/28. 2 Dec sowing measured 29/40/30/27 (126 d).",
+    "heat_thresholds": { "flowering": 31.0, "grain_filling": 35.0 },
+    "heat_windows": [
+      { "name": "flowering",     "day_start": 95,  "day_end": 110, "tmax_threshold_c": 31.0 },
+      { "name": "grain_filling", "day_start": 106, "day_end": 130, "tmax_threshold_c": 35.0 }
+    ],
+    "_heat_window_derivation": "Kaur et al. 2025: 12 Dec sowing headed at 101 DAS, soft dough 109 DAS, maturity 136 DAS. Late-sown wheat flowers in March, so heat warnings matter most for this profile.",
+    "depletion_fraction": 0.55,
+    "depletion_fraction_by_stage": null,
+    "root_depth": { "initial_m": 0.30, "maximum_m": 1.00, "full_depth_day": 70 },
+    "irrigation": {
+      "checkin_depth_mm": { "light": 50, "normal": 75, "heavy": 100 },
+      "max_advised_depth_mm": 75,
+      "pre_sowing_irrigation_mm": 100,
+      "first_irrigation_das": { "october_sown": 21, "later_sown": 28 }
+    },
+    "sowing_window": { "start": "11-22", "end": "12-20" },
+    "stop_irrigation": {
+      "last_irrigation_date": "03-31",
+      "if_sown_after": { "date": "12-05", "last_irrigation_date": "04-10" },
+      "_source": "PAU Rabi 2025-26 p.17: timely-sown wheat may be irrigated up to the end of March, wheat sown after 5 December up to 10 April. After that date Boond advises no irrigation, heat irrigation included."
+    },
+    "critical_irrigation": {
+      "name": "CRI",
+      "day_if_sown_in_october": 21,
+      "day_if_sown_later": 28,
+      "window_days": 7,
+      "skip_if_water_since_sowing_mm": 25,
+      "depth_mm": 50,
+      "_source": "PAU Rabi 2025-26 p.17: first irrigation 'relatively light', 3 weeks after sowing for October-sown and 4 weeks for later-sown wheat (crown root initiation). A soil-water balance alone never triggers it when the root zone starts full. ASSUMPTIONS: skipped if at least 25 mm of effective rain or irrigation has reached the field since sowing; window 7 days; depth 50 mm (= the light check-in depth)."
+    },
+    "max_crop_height_m": 1.0,
+    "validation_targets": { "seasonal_etc_mm": [300, 420], "_note": "ASSUMPTION: shorter season than timely wheat." }
+  },
+
+  "wheat_january": {
+    "_label": "Wheat, very late sown (1-15 January), Punjab: PAU variety PBW 757. Use when the farmer's sowing date is in January or later.",
+    "crop_family": "upland",
+    "total_days": 114,
+    "stages": {
+      "initial":     { "days": 26, "kc_start": 0.40, "kc_end": 0.40 },
+      "development": { "days": 36, "kc_start": 0.40, "kc_end": 1.15 },
+      "mid":         { "days": 27, "kc_start": 1.15, "kc_end": 1.15 },
+      "late":        { "days": 25, "kc_start": 1.15, "kc_end": 0.30 }
+    },
+    "_stage_source": "Duration: PBW 757 (PAU, 2020) 'matures in about 114 days', recommended for 'irrigated very late sown conditions (January sowing)' (Global Agriculture, varieties for late-sown wheat in Punjab; Tribune 2024: PAU advises PBW 757 for sowing in early January). Stage split: the 2 Dec sowing measured at PAU Ludhiana, 29/40/30/27 = 126 d (Kaur et al. 2017), scaled to 114 d (ASSUMPTION). Kc as wheat_late.",
+    "heat_thresholds": { "flowering": 31.0, "grain_filling": 35.0 },
+    "heat_windows": [
+      { "name": "flowering",     "day_start": 82, "day_end": 95,  "tmax_threshold_c": 31.0 },
+      { "name": "grain_filling", "day_start": 90, "day_end": 110, "tmax_threshold_c": 35.0 }
+    ],
+    "_heat_window_derivation": "ASSUMPTION: wheat_late windows (95-110, 106-130 of 133 d) scaled to 114 d. January-sown wheat flowers in late March to early April and fills grain in April, the hottest part of any wheat season in Punjab, so the heat rule matters most here.",
+    "depletion_fraction": 0.55,
+    "depletion_fraction_by_stage": null,
+    "root_depth": { "initial_m": 0.30, "maximum_m": 1.00, "full_depth_day": 62 },
+    "_root_notes": "full_depth_day = end of the development stage, as for the other wheat profiles (ASSUMPTION).",
+    "irrigation": {
+      "checkin_depth_mm": { "light": 50, "normal": 75, "heavy": 100 },
+      "max_advised_depth_mm": 75,
+      "pre_sowing_irrigation_mm": 100,
+      "first_irrigation_das": { "october_sown": 21, "later_sown": 28 }
+    },
+    "sowing_window": { "start": "01-01", "end": "01-15" },
+    "_sowing_window_source": "PAU: PBW 757 for sowing in the first fortnight of January; PAU baseline.json schedule 'sown 21 Dec to 15 Jan'.",
+    "stop_irrigation": {
+      "last_irrigation_date": "04-10",
+      "_source": "PAU Rabi 2025-26 p.17: wheat sown after 5 December may be irrigated up to 10 April."
+    },
+    "critical_irrigation": {
+      "name": "CRI",
+      "day_if_sown_in_october": 21,
+      "day_if_sown_later": 28,
+      "window_days": 7,
+      "skip_if_water_since_sowing_mm": 25,
+      "depth_mm": 50,
+      "_source": "PAU Rabi 2025-26 p.17: first irrigation 'relatively light', 4 weeks after sowing for wheat sown after October (crown root initiation). ASSUMPTIONS as for the other wheat profiles."
+    },
+    "max_crop_height_m": 0.82,
+    "validation_targets": { "seasonal_etc_mm": [250, 400], "_note": "ASSUMPTION: shorter season than late wheat, but in warmer months (February-April). The 2021-22 Ludhiana replay (sown 5 Jan 2022) is used as a check." }
+  },
+
+  "wheat_fao56": {
+    "_label": "Original spec values: FAO-56 Table 11 spring wheat, November sowing, Central India (15/25/50/30 = 120 d). Keep for unit tests and for central-India fields.",
+    "crop_family": "upland",
+    "total_days": 120,
+    "stages": {
+      "initial":     { "days": 15, "kc_start": 0.30, "kc_end": 0.30 },
+      "development": { "days": 25, "kc_start": 0.30, "kc_end": 1.15 },
+      "mid":         { "days": 50, "kc_start": 1.15, "kc_end": 1.15 },
+      "late":        { "days": 30, "kc_start": 1.15, "kc_end": 0.40 }
+    },
+    "heat_thresholds": { "flowering": 31.0, "grain_filling": 35.0 },
+    "heat_windows": [
+      { "name": "flowering",     "day_start": 70, "day_end": 85,  "tmax_threshold_c": 31.0 },
+      { "name": "grain_filling", "day_start": 80, "day_end": 110, "tmax_threshold_c": 35.0 }
+    ],
+    "_heat_window_derivation": "ASSUMPTION scaled from the Punjab windows by 120/145. No cited central-India calendar was found; cite one before using in production.",
+    "depletion_fraction": 0.55,
+    "root_depth": { "initial_m": 0.30, "maximum_m": 1.00, "full_depth_day": 40 },
+    "irrigation": {
+      "checkin_depth_mm": { "light": 50, "normal": 75, "heavy": 100 },
+      "max_advised_depth_mm": 75
+    },
+    "critical_irrigation": {
+      "name": "CRI",
+      "day_if_sown_in_october": 21,
+      "day_if_sown_later": 28,
+      "window_days": 7,
+      "skip_if_water_since_sowing_mm": 25,
+      "depth_mm": 50,
+      "_source": "PAU Rabi 2025-26 p.17: first irrigation 'relatively light', 3 weeks after sowing for October-sown and 4 weeks for later-sown wheat (crown root initiation). A soil-water balance alone never triggers it when the root zone starts full. ASSUMPTIONS: skipped if at least 25 mm of effective rain or irrigation has reached the field since sowing; window 7 days; depth 50 mm (= the light check-in depth)."
+    },
+    "max_crop_height_m": 1.0
+  },
+
+  "paddy": {
+    "_label": "Paddy (rice), puddled transplanted, medium duration (PR 131, PR 121, PR 128, PR 132; ~110 days after transplanting), Punjab/Haryana. Day 1 = transplanting date.",
+    "crop_family": "paddy",
+    "total_days": 110,
+    "stages": {
+      "initial":     { "days": 22, "kc_start": 1.05, "kc_end": 1.05 },
+      "development": { "days": 22, "kc_start": 1.05, "kc_end": 1.20 },
+      "mid":         { "days": 44, "kc_start": 1.20, "kc_end": 1.20 },
+      "late":        { "days": 22, "kc_start": 1.20, "kc_end": 0.75 }
+    },
+    "_stage_source": "Stage proportions of FAO-56 Table 11 rice (30/30/60/30 = 150 d) scaled to the PAU field duration of 110 days after transplanting (PAU Package of Practices Kharif 2026 p.3-4: PR 131 110 d, PR 121 110 d, PR 128 111 d, PR 132 111 d). Scaling is an ASSUMPTION.",
+    "_kc_notes": "FAO-56 Table 12 rice: Kc ini 1.05 (flooded), mid 1.20, end 0.90-0.60; 0.75 used (field drained ~2 weeks before harvest). PAU Ludhiana measured 1.15 / 1.36 / 0.86 (Kaur et al. 2017) - kept below for sensitivity tests.",
+    "kc_local_measured": {
+      "_source": "Kaur et al. (2017) J. Agrometeorology 19(2), PAU Ludhiana",
+      "kc_ini": 1.15, "kc_mid_range": [1.26, 1.36], "kc_end_range": [0.76, 0.86],
+      "use": "sensitivity test only"
+    },
+    "heat_thresholds": { "flowering": 35.0, "grain_filling": 35.0 },
+    "heat_windows": [
+      { "name": "flowering",     "day_start": 75, "day_end": 90,  "tmax_threshold_c": 35.0 },
+      { "name": "grain_filling", "day_start": 85, "day_end": 105, "tmax_threshold_c": 35.0 }
+    ],
+    "_heat_window_derivation": "Rice ripening (flowering to maturity) lasts about 30 days, so 50% flowering is ~80 DAT for a 110-DAT variety (standard rice physiology, ASSUMPTION - cite IRRI/Yoshida 1981 if you can). Threshold: spikelet sterility rises when air temperature at anthesis reaches about 35 C (Yoshida 1981, widely used); Jagadish, Craufurd & Wheeler (2007, J. Exp. Bot. 58:1627) found damage from 33.7 C tissue temperature for one hour at anthesis. The grain-filling value is an ASSUMPTION.",
+    "depletion_fraction": 0.20,
+    "_p_note": "FAO-56 Table 22: p = 0.20 'of saturation' for rice; only used after the pond has gone.",
+    "root_depth": { "initial_m": 0.30, "maximum_m": 0.50, "full_depth_day": 44 },
+    "paddy_water": {
+      "continuous_ponding_days": 14,
+      "irrigate_days_after_pond_disappears": 2,
+      "target_pond_mm": 75,
+      "max_pond_mm": 100,
+      "bund_storage_mm": 100,
+      "stop_irrigation_day": 95,
+      "tensiometer_trigger_cm": 150,
+      "land_prep_saturation_mm": 200,
+      "_source": "PAU Kharif 2026 p.12: keep water standing continuously for two weeks after transplanting; then irrigate two days after the ponded water has infiltrated; standing water should not exceed 10 cm; tensiometer at 15-20 cm depth, irrigate at 150+-20 cm tension; stop irrigation about a fortnight before maturity. target_pond_mm 75 = typical irrigation depth (ASSUMPTION within PAU's 10 cm limit; TNAU uses 5 cm cyclic). bund_storage_mm = rain held by bunds (ASSUMPTION = 10 cm limit). land_prep_saturation_mm 200 from FAO Irrigation Water Management Training Manual 3 (pre-transplanting; not part of Boond advice). Percolation rates live in soils.json."
+    },
+    "irrigation": {
+      "checkin_depth_mm": { "light": 50, "normal": 75, "heavy": 100 },
+      "max_advised_depth_mm": 100
+    },
+    "transplant_window": { "start": "06-20", "end": "07-10" },
+    "_window_source": "PAU Kharif 2026 p.8: transplant 20 June - 10 July; nursery 30-35 days old.",
+    "critical_water_stages": ["active tillering", "panicle initiation", "booting", "heading", "flowering"],
+    "max_crop_height_m": 1.0,
+    "validation_targets": {
+      "seasonal_etc_mm": [450, 650],
+      "total_water_incl_percolation_mm": [1100, 1250],
+      "_note": "ETc range ASSUMPTION from TNAU wet-season ET of 4-5 mm/d x ~110 d plus higher pre-monsoon June ET. Total water (ET + percolation + land prep) 1100-1250 mm per TNAU Agritech; Punjab light soils use more because percolation is higher."
+    }
+  },
+
+  "paddy_short": {
+    "_label": "Paddy, short duration PR 126 (93 days after transplanting), Punjab. PAU promotes it to save water.",
+    "crop_family": "paddy",
+    "total_days": 93,
+    "stages": {
+      "initial":     { "days": 19, "kc_start": 1.05, "kc_end": 1.05 },
+      "development": { "days": 19, "kc_start": 1.05, "kc_end": 1.20 },
+      "mid":         { "days": 37, "kc_start": 1.20, "kc_end": 1.20 },
+      "late":        { "days": 18, "kc_start": 1.20, "kc_end": 0.75 }
+    },
+    "_stage_source": "FAO-56 rice proportions scaled to PAU's 93 DAT for PR 126 (Kharif 2026 p.4). ASSUMPTION.",
+    "heat_thresholds": { "flowering": 35.0, "grain_filling": 35.0 },
+    "heat_windows": [
+      { "name": "flowering",     "day_start": 58, "day_end": 72, "tmax_threshold_c": 35.0 },
+      { "name": "grain_filling", "day_start": 68, "day_end": 88, "tmax_threshold_c": 35.0 }
+    ],
+    "depletion_fraction": 0.20,
+    "root_depth": { "initial_m": 0.30, "maximum_m": 0.50, "full_depth_day": 38 },
+    "paddy_water": {
+      "continuous_ponding_days": 14,
+      "irrigate_days_after_pond_disappears": 2,
+      "target_pond_mm": 75,
+      "max_pond_mm": 100,
+      "bund_storage_mm": 100,
+      "stop_irrigation_day": 78,
+      "tensiometer_trigger_cm": 150,
+      "land_prep_saturation_mm": 200
+    },
+    "irrigation": {
+      "checkin_depth_mm": { "light": 50, "normal": 75, "heavy": 100 },
+      "max_advised_depth_mm": 100
+    },
+    "transplant_window": { "start": "06-20", "end": "07-15", "_source": "PAU: PR 126 not to be transplanted after 15 July; nursery 25-30 days." },
+    "max_crop_height_m": 1.0
+  },
+
+  "cotton": {
+    "_label": "Cotton, Bt hybrid (American cotton), irrigated, sown April to mid-May, Punjab/Haryana. ~165 days.",
+    "crop_family": "upland",
+    "total_days": 165,
+    "stages": {
+      "initial":     { "days": 25, "kc_start": 0.35, "kc_end": 0.35 },
+      "development": { "days": 42, "kc_start": 0.35, "kc_end": 1.18 },
+      "mid":         { "days": 51, "kc_start": 1.18, "kc_end": 1.18 },
+      "late":        { "days": 47, "kc_start": 1.18, "kc_end": 0.60 }
+    },
+    "_stage_source": "FAO-56 Table 11 cotton (Mar-May sowing, Egypt/Pakistan/California: 30/50/60/55 = 195 d) scaled to the 160-165 d duration of Bt hybrids in the Approved Package of Practices for Cotton, Punjab (CICR 2006-07). Scaling is an ASSUMPTION. Kc: FAO-56 Table 12 cotton 0.35 / 1.15-1.20 / 0.70-0.50 (mid-points used).",
+    "heat_thresholds": { "flowering": 35.0, "boll_development": 38.0 },
+    "heat_windows": [
+      { "name": "flowering",        "day_start": 55, "day_end": 110, "tmax_threshold_c": 35.0 },
+      { "name": "boll_development", "day_start": 70, "day_end": 150, "tmax_threshold_c": 38.0 }
+    ],
+    "_heat_window_derivation": "50% flowering at 57-62 DAS for Bt and non-Bt hybrids sown mid-May at Modipuram, UP (Singh et al. 2007, Indian J. Agric. Sci. 77(5):305). Flowering period length ~55 d and flower-to-open-boll 50-60 d (FAO Land & Water cotton page). Thresholds: above 35 C photosynthesis falls and boll abscission rises sharply (Oosterhuis & Snider 2011, 'Stress Physiology in Cotton', Cotton Foundation, ch.1, citing Hodges 1993 and Bibi 2008); FAO: yield reduced above 38 C during boll development. Punjab May-June Tmax often exceeds 40 C, so the cotton heat rule asks for 2 consecutive hot days (heat_consecutive_days).",
+    "heat_consecutive_days": 2,
+    "_heat_consecutive_note": "ASSUMPTION: heat protection needs at least 2 consecutive forecast days at or above the threshold (inside the 3-day window), the same persistence IMD requires before it declares a heat wave. In Punjab, May-June Tmax passes 38-40 C on most days, so a single hot day would ask for heat irrigations far too often for these long-season crops. Wheat and paddy keep config heat.consecutive_days_required (1).",
+    "depletion_fraction": 0.65,
+    "_p_note": "FAO-56 Table 22 cotton p = 0.65. FAO Land & Water gives 0.6 in vegetative stages; keep 0.65.",
+    "root_depth": { "initial_m": 0.30, "maximum_m": 1.00, "full_depth_day": 67 },
+    "_root_notes": "FAO-56 Table 22 cotton Zr 1.0-1.7 m; FAO says 70-80% of uptake is from the top 0.9 m. Lower end used.",
+    "irrigation": {
+      "checkin_depth_mm": { "light": 50, "normal": 75, "heavy": 100 },
+      "max_advised_depth_mm": 75,
+      "pre_sowing_irrigation": "heavy (PAU Farm Operations, April)",
+      "first_irrigation_das": [28, 42],
+      "interval_days": [14, 21],
+      "number_of_irrigations": [4, 6],
+      "_source": "CICR/PAU Approved Package of Practices for Cotton, Punjab: four to six irrigations depending on rain; first 4-6 weeks after sowing; then every 2-3 weeks; last irrigation by end of September to hasten boll opening; drain stagnant water. PAU Kharif 2026 mentions first irrigation at 35-40 DAS. Depths are ASSUMPTIONS (same as wheat)."
+    },
+    "sowing_window": { "start": "04-01", "end": "05-15" },
+    "stop_irrigation": {
+      "last_irrigation_date": "09-30",
+      "_source": "CICR/PAU Approved Package of Practices for Cotton, Punjab: last irrigation by the end of September to hasten boll opening."
+    },
+    "critical_water_stages": ["squaring", "flowering (start to peak)", "boll development"],
+    "ky_fao33": { "initial": 0.2, "development": 0.5, "mid": null, "late": 0.25, "total": 0.85 },
+    "max_crop_height_m": 1.35,
+    "validation_targets": {
+      "seasonal_etc_mm": [700, 1000],
+      "_note": "FAO Land & Water: cotton ETm 700-1300 mm per season. Lower part used because the Punjab season is ~165 d and half of it falls in the humid monsoon."
+    }
+  },
+
+  "sugarcane": {
+    "_label": "Sugarcane, plant crop, spring planted (mid-Feb to March), North India (Punjab/Haryana/UP). ~360 days.",
+    "crop_family": "upland",
+    "total_days": 360,
+    "stages": {
+      "initial":     { "days": 45,  "kc_start": 0.40, "kc_end": 0.40 },
+      "development": { "days": 75,  "kc_start": 0.40, "kc_end": 1.25 },
+      "mid":         { "days": 150, "kc_start": 1.25, "kc_end": 1.25 },
+      "late":        { "days": 90,  "kc_start": 1.25, "kc_end": 0.75 }
+    },
+    "_stage_source": "Growth phases from TNAU Agritech Expert System (germination 0-45, tillering 45-120, grand growth 120-270, ripening 270-360 days) mapped onto FAO stages. Kc from FAO-56 Table 12 (0.40 / 1.25 / 0.75). FAO-56 Table 11 lists 35/60/190/120 = 405 d for 'low latitudes' - too long for north-Indian spring cane.",
+    "heat_thresholds": { "formative": 40.0 },
+    "heat_windows": [
+      { "name": "formative", "day_start": 45, "day_end": 150, "tmax_threshold_c": 40.0 }
+    ],
+    "_heat_window_derivation": "Tillering and early grand growth fall in April-July in north India. Optimum growth 30-35 C; stress starts above ~40 C in prolonged heatwaves (SASRI, Erasmus, Rhodes & Van Heerden 2025). FAO: optimum mean daily temperature 22-30 C. LOW CONFIDENCE - sugarcane has no single sensitive flowering window; treat as a stress alert, not a yield-critical one.",
+    "heat_consecutive_days": 2,
+    "_heat_consecutive_note": "ASSUMPTION: heat protection needs at least 2 consecutive forecast days at or above the threshold (inside the 3-day window), the same persistence IMD requires before it declares a heat wave. In Punjab, May-June Tmax passes 38-40 C on most days, so a single hot day would ask for heat irrigations far too often for these long-season crops. Wheat and paddy keep config heat.consecutive_days_required (1).",
+    "depletion_fraction": 0.65,
+    "depletion_fraction_by_stage": { "initial": 0.30 },
+    "_p_note": "FAO-56 Table 22 sugarcane p = 0.65; FAO Land & Water: ~0.30 during establishment. TNAU: irrigate when available soil water falls to 50%. Implement depletion_fraction_by_stage only if your engine supports it; otherwise ignore.",
+    "root_depth": { "initial_m": 0.30, "maximum_m": 1.20, "full_depth_day": 120 },
+    "_root_notes": "FAO-56 Table 22: 1.2-2.0 m; FAO Land & Water: uptake concentrated in the top 1.2-2.0 m. Lower end used.",
+    "irrigation": {
+      "checkin_depth_mm": { "light": 50, "normal": 75, "heavy": 100 },
+      "max_advised_depth_mm": 75,
+      "interval_days_by_season": { "apr_jun": [7, 12], "summer_tnau": [10, 15], "winter_tnau": [25, 30] },
+      "_source": "PAU Farm Operations for April and June: 'Irrigate the crop at 7-12 days interval'. TNAU Expert System: 10-15 days in summer, 25-30 in winter; critical stages germination and grand growth. Depths ASSUMPTIONS."
+    },
+    "planting_window": { "start": "02-15", "end": "03-31", "_source": "AICRP on Sugarcane, Technical Bulletin No. 1 (ICAR-IISR Lucknow, 2017): in the North-West zone spring cane is planted in February-March (March is best in Punjab) and autumn cane in September-October. Start 15 Feb is an ASSUMPTION (cold soil delays germination earlier). Plantings from August to December use the sugarcane_autumn profile." },
+    "stop_irrigation": {
+      "days_before_harvest": 30,
+      "_source": "Irrigation is withheld before harvest so that the cane ripens and sucrose builds up (FAO Land & Water, sugarcane: 'irrigation is stopped' during ripening to force maturity). In a trial of 15, 30, 45 and 60 days without irrigation before harvest, 30 days gave the highest sugar recovery and sugar yield (Abazied & El-Laboudy 2021, Egyptian J. Applied Sciences 36(1):1-15). 30 days is used for every sugarcane profile (ASSUMPTION for Punjab: confirm the drying-off period in the PAU sugarcane chapter before citing)."
+    },
+    "critical_water_stages": ["germination", "tillering", "grand growth"],
+    "ky_fao33": { "initial": 0.75, "mid": 0.5, "late": 0.1, "total": 1.2 },
+    "max_crop_height_m": 3.0,
+    "validation_targets": {
+      "seasonal_etc_mm": [1400, 2000],
+      "_note": "FAO: 1500-2500 mm per season (generally for 15-16 month crops); TNAU: 1800-2200 mm for a 365-day crop in Tamil Nadu. North India has a cooler winter, so the lower part is expected."
+    }
+  },
+
+  "sugarcane_ratoon": {
+    "_label": "Sugarcane ratoon (regrowth after harvest). Day 1 = harvest date of the previous crop.",
+    "crop_family": "upland",
+    "total_days": 280,
+    "stages": {
+      "initial":     { "days": 25,  "kc_start": 0.40, "kc_end": 0.40 },
+      "development": { "days": 70,  "kc_start": 0.40, "kc_end": 1.25 },
+      "mid":         { "days": 135, "kc_start": 1.25, "kc_end": 1.25 },
+      "late":        { "days": 50,  "kc_start": 1.25, "kc_end": 0.75 }
+    },
+    "_stage_source": "FAO-56 Table 11, sugarcane ratoon, 'Low latitudes' row (25/70/135/50 = 280 d). Kc as plant cane (FAO-56 Table 12). Ratoon in north India often runs 300-330 d; stretch 'mid' if so (ASSUMPTION).",
+    "heat_thresholds": { "formative": 40.0 },
+    "heat_windows": [
+      { "name": "formative", "day_start": 25, "day_end": 130, "tmax_threshold_c": 40.0 }
+    ],
+    "heat_consecutive_days": 2,
+    "_heat_consecutive_note": "ASSUMPTION: heat protection needs at least 2 consecutive forecast days at or above the threshold (inside the 3-day window), the same persistence IMD requires before it declares a heat wave. In Punjab, May-June Tmax passes 38-40 C on most days, so a single hot day would ask for heat irrigations far too often for these long-season crops. Wheat and paddy keep config heat.consecutive_days_required (1).",
+    "depletion_fraction": 0.65,
+    "root_depth": { "initial_m": 0.60, "maximum_m": 1.20, "full_depth_day": 95 },
+    "_root_notes": "Ratoon starts from an existing root system: initial 0.60 m is an ASSUMPTION.",
+    "irrigation": {
+      "checkin_depth_mm": { "light": 50, "normal": 75, "heavy": 100 },
+      "max_advised_depth_mm": 75
+    },
+    "stop_irrigation": {
+      "days_before_harvest": 30,
+      "_source": "Irrigation is withheld before harvest so that the cane ripens and sucrose builds up (FAO Land & Water, sugarcane: 'irrigation is stopped' during ripening to force maturity). In a trial of 15, 30, 45 and 60 days without irrigation before harvest, 30 days gave the highest sugar recovery and sugar yield (Abazied & El-Laboudy 2021, Egyptian J. Applied Sciences 36(1):1-15). 30 days is used for every sugarcane profile (ASSUMPTION for Punjab: confirm the drying-off period in the PAU sugarcane chapter before citing)."
+    },
+    "max_crop_height_m": 3.0
+  },
+
+  "sugarcane_autumn": {
+    "_label": "Sugarcane, plant crop, autumn planted (September-October), North-West India (Punjab/Haryana/west UP). ~420 days; harvested in the second winter.",
+    "crop_family": "upland",
+    "total_days": 420,
+    "stages": {
+      "initial":     { "days": 45,  "kc_start": 0.40, "kc_end": 0.40 },
+      "development": { "days": 210, "kc_start": 0.40, "kc_end": 1.25 },
+      "mid":         { "days": 120, "kc_start": 1.25, "kc_end": 1.25 },
+      "late":        { "days": 45,  "kc_start": 1.25, "kc_end": 0.75 }
+    },
+    "_stage_source": "AICRP on Sugarcane, Technical Bulletin No. 1 (ICAR-IISR 2017): North-West zone autumn planting in September-October; harvest from November-December of the next year. Calendar for 1 October planting (ASSUMPTION): germination October to mid-November (initial 45 d); slow winter growth and spring tillering to mid-June (development 210 d, the Kc rise is slow because winter ET0 is low); grand growth through the monsoon to early October (mid 120 d); ripening to late November (late 45 d). Kc from FAO-56 Table 12 (0.40 / 1.25 / 0.75). FAO-56 Table 11 gives 35/60/190/120 = 405 d for a low-latitude plant crop, of the same order.",
+    "heat_thresholds": { "formative": 40.0 },
+    "heat_windows": [
+      { "name": "formative", "day_start": 180, "day_end": 270, "tmax_threshold_c": 40.0 }
+    ],
+    "_heat_window_derivation": "ASSUMPTION: tillering and early grand growth of autumn cane fall in April-June (days ~180-270 after a 1 October planting), the same calendar months as the spring-cane formative window (days 45-150 after a 1 March planting). Threshold as spring cane (SASRI 2025).",
+    "heat_consecutive_days": 2,
+    "_heat_consecutive_note": "ASSUMPTION: heat protection needs at least 2 consecutive forecast days at or above the threshold (inside the 3-day window), the same persistence IMD requires before it declares a heat wave. In Punjab, May-June Tmax passes 38-40 C on most days, so a single hot day would ask for heat irrigations far too often for these long-season crops. Wheat and paddy keep config heat.consecutive_days_required (1).",
+    "depletion_fraction": 0.65,
+    "depletion_fraction_by_stage": { "initial": 0.30 },
+    "_p_note": "As spring sugarcane: FAO-56 Table 22 p = 0.65; ~0.30 during establishment (FAO Land & Water).",
+    "root_depth": { "initial_m": 0.30, "maximum_m": 1.20, "full_depth_day": 255 },
+    "_root_notes": "As spring sugarcane (1.2 m); full depth at the end of the development stage (ASSUMPTION).",
+    "irrigation": {
+      "checkin_depth_mm": { "light": 50, "normal": 75, "heavy": 100 },
+      "max_advised_depth_mm": 75,
+      "_source": "Depths as spring sugarcane (ASSUMPTIONS)."
+    },
+    "planting_window": { "start": "09-01", "end": "10-31", "_source": "AICRP on Sugarcane, Technical Bulletin No. 1 (ICAR-IISR 2017): autumn planting in September-October in the North-West zone." },
+    "stop_irrigation": {
+      "days_before_harvest": 30,
+      "_source": "Irrigation is withheld before harvest so that the cane ripens and sucrose builds up (FAO Land & Water, sugarcane: 'irrigation is stopped' during ripening to force maturity). In a trial of 15, 30, 45 and 60 days without irrigation before harvest, 30 days gave the highest sugar recovery and sugar yield (Abazied & El-Laboudy 2021, Egyptian J. Applied Sciences 36(1):1-15). 30 days is used for every sugarcane profile (ASSUMPTION for Punjab: confirm the drying-off period in the PAU sugarcane chapter before citing)."
+    },
+    "critical_water_stages": ["germination", "tillering", "grand growth"],
+    "max_crop_height_m": 3.0,
+    "validation_targets": {
+      "seasonal_etc_mm": [1500, 2300],
+      "_note": "FAO Land & Water: 1500-2500 mm per season, generally for 15-16 month crops. ASSUMPTION: lower and middle part for a 14-month crop in north India with a cool winter. Not checked against a full replay: the cached 2021-22 weather is too short for a 420-day season."
+    }
+  }
+}

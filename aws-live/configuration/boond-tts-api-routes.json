@@ -1,0 +1,62 @@
+﻿{
+    "Items": [
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationScopes": [],
+            "AuthorizationType": "NONE",
+            "RequestParameters": {},
+            "RouteId": "0g57uqu",
+            "RouteKey": "POST /tts",
+            "Target": "integrations/77fg0s9"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationType": "NONE",
+            "RouteId": "13o6h22",
+            "RouteKey": "DELETE /fields/{token}",
+            "Target": "integrations/ewsuukt"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationType": "NONE",
+            "RouteId": "5vfmpx5",
+            "RouteKey": "POST /fields",
+            "Target": "integrations/63a6age"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationType": "NONE",
+            "RouteId": "c8l0hp3",
+            "RouteKey": "PATCH /fields/{token}",
+            "Target": "integrations/vmtu86v"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationType": "NONE",
+            "RouteId": "gz21m6n",
+            "RouteKey": "GET /fields/{token}/weather",
+            "Target": "integrations/d1eie6e"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationType": "NONE",
+            "RouteId": "orbkvzi",
+            "RouteKey": "POST /fields/{token}/events",
+            "Target": "integrations/bqhwlg3"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationType": "NONE",
+            "RouteId": "wkfatis",
+            "RouteKey": "POST /fields/{token}/push",
+            "Target": "integrations/c7ffe34"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationType": "NONE",
+            "RouteId": "xrdxpeo",
+            "RouteKey": "GET /fields/{token}",
+            "Target": "integrations/e1nmqcd"
+        }
+    ]
+}

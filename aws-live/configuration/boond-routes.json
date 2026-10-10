@@ -1,0 +1,58 @@
+﻿{
+    "Items": [
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationScopes": [],
+            "AuthorizationType": "NONE",
+            "RequestParameters": {},
+            "RouteId": "199bigg",
+            "RouteKey": "DELETE /fields/{token}",
+            "Target": "integrations/s1rzzal"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationScopes": [],
+            "AuthorizationType": "NONE",
+            "RequestParameters": {},
+            "RouteId": "1q2f2kd",
+            "RouteKey": "POST /fields",
+            "Target": "integrations/7x5pljp"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationScopes": [],
+            "AuthorizationType": "NONE",
+            "RequestParameters": {},
+            "RouteId": "5lwfaas",
+            "RouteKey": "POST /fields/{token}/push-subscription",
+            "Target": "integrations/lls5pak"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationScopes": [],
+            "AuthorizationType": "NONE",
+            "RequestParameters": {},
+            "RouteId": "eed7i2d",
+            "RouteKey": "POST /fields/{token}/events",
+            "Target": "integrations/z9wwi1m"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationScopes": [],
+            "AuthorizationType": "NONE",
+            "RequestParameters": {},
+            "RouteId": "ion985e",
+            "RouteKey": "GET /fields/{token}",
+            "Target": "integrations/nqbeeu8"
+        },
+        {
+            "ApiKeyRequired": false,
+            "AuthorizationScopes": [],
+            "AuthorizationType": "NONE",
+            "RequestParameters": {},
+            "RouteId": "vynblul",
+            "RouteKey": "GET /config",
+            "Target": "integrations/1twptm4"
+        }
+    ]
+}

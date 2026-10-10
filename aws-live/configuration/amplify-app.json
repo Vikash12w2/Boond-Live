@@ -1,0 +1,44 @@
+﻿{
+    "app": {
+        "appId": "d1f7juo4mqr40l",
+        "appArn": "arn:aws:amplify:ap-southeast-2:036019072993:apps/d1f7juo4mqr40l",
+        "name": "Boond-Live",
+        "tags": {},
+        "repository": "https://github.com/Vikash12w2/Boond-Live",
+        "platform": "WEB",
+        "createTime": "2026-10-10T12:45:14.257000+05:30",
+        "updateTime": "2026-10-10T12:45:14.257000+05:30",
+        "environmentVariables": {
+            "AMPLIFY_DIFF_DEPLOY": "false",
+            "AMPLIFY_MONOREPO_APP_ROOT": "frontend",
+            "VITE_API_BASE": "https://xhp7rzeew0.execute-api.ap-southeast-2.amazonaws.com"
+        },
+        "defaultDomain": "d1f7juo4mqr40l.amplifyapp.com",
+        "enableBranchAutoBuild": false,
+        "enableBranchAutoDeletion": false,
+        "enableBasicAuth": false,
+        "customRules": [
+            {
+                "source": "/<*>",
+                "target": "/index.html",
+                "status": "404-200"
+            }
+        ],
+        "productionBranch": {
+            "lastDeployTime": "2026-10-10T15:57:42.583000+05:30",
+            "status": "SUCCEED",
+            "branchName": "frontend-dashboard"
+        },
+        "buildSpec": "version: 1\napplications:\n  - frontend:\n      phases:\n        preBuild:\n          commands:\n            - npm ci --cache .npm --prefer-offline\n        build:\n          commands:\n            - npm run build\n      artifacts:\n        baseDirectory: dist\n        files:\n          - '**/*'\n      cache:\n        paths:\n          - .npm/**/*\n    appRoot: frontend\n",
+        "customHeaders": "",
+        "enableAutoBranchCreation": false,
+        "repositoryCloneMethod": "TOKEN",
+        "cacheConfig": {
+            "type": "AMPLIFY_MANAGED_NO_COOKIES"
+        },
+        "webhookCreateTime": "2026-10-10T12:45:14.096000+05:30",
+        "jobConfig": {
+            "buildComputeType": "STANDARD_8GB"
+        }
+    }
+}

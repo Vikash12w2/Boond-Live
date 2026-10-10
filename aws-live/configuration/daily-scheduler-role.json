@@ -1,0 +1,21 @@
+﻿{
+    "RoleName": "Amazon_EventBridge_Scheduler_LAMBDA_fe902295d3",
+    "Arn": "arn:aws:iam::036019072993:role/service-role/Amazon_EventBridge_Scheduler_LAMBDA_fe902295d3",
+    "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": "scheduler.amazonaws.com"
+                },
+                "Action": "sts:AssumeRole",
+                "Condition": {
+                    "StringEquals": {
+                        "aws:SourceAccount": "036019072993"
+                    }
+                }
+            }
+        ]
+    }
+}

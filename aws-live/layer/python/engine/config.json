@@ -1,0 +1,86 @@
+{
+  "_meta": {
+    "about": "Editable assumptions for Boond. Every value has a _why. Values marked ASSUMPTION are judgement calls; state them in the README.",
+    "version": "2026-10-08"
+  },
+
+  "rain": {
+    "effective_threshold_ratio": 0.2,
+    "_why_effective_threshold_ratio": "Rain below 0.2 x ET0 is treated as lost to evaporation (the FAO-56 rule used in your spec, Ch. 8).",
+    "skip_probability_threshold": 0.7,
+    "_why_skip_probability_threshold": "ASSUMPTION: forecast rain counts toward SKIP only if Open-Meteo precipitation_probability_max >= 70 %. Null probability = not confident.",
+    "forecast_rain_discount": 1.0,
+    "_why_forecast_rain_discount": "ASSUMPTION: multiply forecast rain by this before using it for SKIP. Set 0.7-0.8 for a more cautious engine."
+  },
+
+  "checkin": {
+    "rain_mm": { "little": 8, "moderate": 30, "heavy": 65 },
+    "_why_rain_mm": "ASSUMPTION anchored to India Meteorological Department 24-h rainfall categories: light 2.5-15.5 mm, moderate 15.6-64.4 mm, heavy 64.5-115.5 mm. Values sit at or below each category's mid-point on purpose: under-counting rain makes Boond advise irrigation slightly early rather than late.",
+    "watered_mm_default": { "light": 50, "normal": 75, "heavy": 100 },
+    "_why_watered_mm": "Fallback only; each crop in crops.json has its own irrigation.checkin_depth_mm. normal 75 mm = PAU Package of Practices 7.5 cm per irrigation; heavy 100 mm = PAU pre-sowing irrigation of ~10 cm; light 50 mm = ASSUMPTION (2/3 of normal; PAU says first wheat irrigation should be 'relatively light' without a number). Surface irrigation cannot be applied evenly much below ~40-50 mm per basin."
+  },
+
+  "irrigation": {
+    "light_depth_mm": 40,
+    "_why_light_depth_mm": "Depth advised for HEAT PROTECTION. ASSUMPTION: smallest depth a farmer can spread over a levelled basin (kiara) with flood irrigation. The original 15 mm is only practical with sprinkler or drip.",
+    "maximum_depth_mm": 75,
+    "_why_maximum_depth_mm": "Cap on an IRRIGATE advice for upland crops = PAU's 7.5 cm per irrigation. Crop-level irrigation.max_advised_depth_mm overrides this (paddy uses 100 mm = PAU 10 cm standing-water limit).",
+    "minimum_advised_depth_mm": 40,
+    "_why_minimum_advised_depth_mm": "ASSUMPTION: if the computed need is below this, round up to it (or WAIT) because smaller flood irrigations are not practical.",
+    "application_efficiency": 0.70,
+    "_why_application_efficiency": "ASSUMPTION for gross pumping volume = net depth / efficiency. Use 0.6-0.75 for level-basin flood irrigation, ~0.9 for drip. Set to 1.0 if you want litres and kWh on the net depth only (as in the spec). Report which you used."
+  },
+
+  "heat": {
+    "forecast_window_days": 3,
+    "_why": "Spec 6.5: warn if forecast Tmax reaches the threshold within 2-3 days while the crop is in a sensitive window.",
+    "consecutive_days_required": 1,
+    "_why_consecutive_days_required": "ASSUMPTION. Raise to 2 for cotton and sugarcane, whose thresholds are crossed often in May-June.",
+    "meaningful_rain_mm": 10,
+    "_why_meaningful_rain_mm": "ASSUMPTION: HEAT PROTECTION is not advised if at least this much confident rain is forecast inside the heat window, because the rain cools and wets the crop."
+  },
+
+  "advisor": {
+    "irrigate_within_days": 2,
+    "_why_irrigate_within_days": "Spec: IRRIGATE when depletion reaches RAW within the next 2 days, even after counting confident rain.",
+    "rain_skip_window_days": 3,
+    "_why_rain_skip_window_days": "Spec: SKIP only when the field would reach RAW within 3 days without rain and confident rain keeps it below RAW for those 3 days. Later days of a 16-day forecast are reassessed on later days.",
+    "paddy_rain_skip_window_days": 1,
+    "_why_paddy_rain_skip_window_days": "Paddy: only confident rain on the first forecast day can replace an irrigation that PAU's rule makes due (irrigate 2 days after the pond has gone)."
+  },
+
+  "kc_climate_adjustment": {
+    "enabled": false,
+    "_status": "NOT IMPLEMENTED in the engine (future work: needs daily RHmin and mean 2 m wind). check_data fails if this is set to true, so nobody believes it is applied.",
+    "_why": "FAO-56 Eq. 62 (Kc mid) and Eq. 65 (Kc end, only if the table value > 0.45): Kc = Kc_table + [0.04 (u2 - 2) - 0.004 (RHmin - 45)] (h / 3)^0.3, with u2 1-6 m/s, RHmin 20-80 %, h = max_crop_height_m in crops.json. Off by default so engine output matches the table values and your unit tests.",
+    "wind_10m_to_2m_factor": 0.748,
+    "_why_wind_factor": "FAO-56 Eq. 47: u2 = u10 x 4.87 / ln(67.8 x 10 - 5.42) = 0.748 x u10. Use a daily MEAN wind, not wind_speed_10m_max, if you enable this."
+  },
+
+  "root_zone": {
+    "assume_full_at_sowing": true,
+    "_why": "Spec 6.4: Day 1 depletion = 0 because of the pre-sowing irrigation (PAU: ~10 cm rauni). Ask in onboarding; if the farmer says no pre-sowing irrigation, start at D = RAW (ASSUMPTION)."
+  },
+
+  "energy": {
+    "default_pump_efficiency": 0.40,
+    "_why_default_pump_efficiency": "ASSUMPTION (wire-to-water: motor x pump). Indian farm pumpsets are widely reported as inefficient; BEE's AgDSM programme estimates 30-40 % energy savings from star-rated replacements. Let farmers or a sensitivity range of 0.30-0.50 override it.",
+    "water_density_kg_m3": 1000,
+    "gravity_m_s2": 9.81,
+    "m3_per_mm_per_acre": 4.0469,
+    "_why_m3": "1 acre = 4046.86 m2, so 1 mm over 1 acre = 4.047 m3 = 4,047 litres.",
+    "kwh_formula": "kWh = m3 x 9.81 x lift_m / (3600 x pump_eff)"
+  },
+
+  "carbon": {
+    "grid_emission_factor_t_per_mwh": 0.675,
+    "_why": "CEA CO2 Baseline Database for the Indian Power Sector, Version 22.0 (Aug 2026), weighted average emission factor for FY 2025-26 = 0.675 tCO2/MWh (= kg CO2/kWh). Earlier years: FY24-25 0.710, FY23-24 0.727, FY22-23 0.716. This is a generation-side factor; it does not add transmission and distribution losses (ASSUMPTION: no T&D gross-up). Diesel pumps need a different factor.",
+    "source_url": "https://cea.nic.in/wp-content/uploads/baseline/2026/09/User_Guide__Version_22.0.pdf"
+  },
+
+  "cost": {
+    "electricity_tariff_inr_per_kwh": 8.0,
+    "_why": "ASSUMPTION: a rough cost-of-supply proxy so savings can be shown in rupees, labelled as an estimate. What farmers actually pay is far lower: Punjab farm power is free to the farmer (state pays PSPCL; the agricultural subsidy is ~Rs 10,413 crore in FY 2025-26, Tribune), and Haryana's HERC 2026-27 order keeps tubewell tariff at 10 paise/unit. Present the rupee number as 'cost to the power system', not the farmer's bill.",
+    "farmer_paid_tariff_inr_per_kwh": { "punjab": 0.0, "haryana": 0.10 }
+  }
+}

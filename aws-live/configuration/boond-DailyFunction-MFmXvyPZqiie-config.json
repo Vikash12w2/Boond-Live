@@ -1,0 +1,13 @@
+﻿{
+    "FunctionName": "boond-DailyFunction-MFmXvyPZqiie",
+    "Runtime": "python3.13",
+    "Handler": "boond.daily.handler",
+    "Role": "arn:aws:iam::036019072993:role/boond-DailyFunctionRole-Sblalekh0lpB",
+    "MemorySize": 512,
+    "Timeout": 300,
+    "Architectures": [
+        "x86_64"
+    ],
+    "Layers": null,
+    "LastModified": "2026-10-10T10:10:59.152+0000"
+}
