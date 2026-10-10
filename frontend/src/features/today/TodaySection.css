@@ -584,3 +584,12 @@
     width: auto;
   }
 }
+
+/* Sowing-window note from the engine: information, not a warning about today's water */
+.today__note {
+  margin-top: var(--s3);
+  padding: var(--s2) var(--s3);
+  background: var(--kanak-tint);
+  border-radius: var(--radius-sm);
+  font-size: var(--step--1);
+}

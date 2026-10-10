@@ -13,6 +13,7 @@ import './TodaySection.css'
 export default function TodaySection({ field, today }: { field: FieldProfile; today: Today | null }) {
   const t = useStrings(strings)
   const { lang } = useLang()
+  if (field.status === 'SEASON_OVER') return <SeasonOver field={field} t={t} lang={lang} />
   if (!today) return <Waiting field={field} t={t} lang={lang} />
 
   const action = today.action
@@ -108,6 +109,11 @@ export default function TodaySection({ field, today }: { field: FieldProfile; to
 
           {reason && <p className="today__reason">{reason}</p>}
           <p className="today__advice">{advice}</p>
+          {today.notes?.[lang].map((note) => (
+            <p key={note} className="today__note">
+              {note}
+            </p>
+          ))}
 
           <ListenButton key={`${lang}|${today.audio_url[lang] ?? ''}|${advice}`} url={today.audio_url[lang]} text={advice} lang={lang} t={t} />
         </div>
@@ -277,9 +283,53 @@ function Facts({ field, today, t, lang, pumping }: { field: FieldProfile; today:
             </dt>
             <dd>{fill(t.units, { n: num(today.kwh, lang, today.kwh < 10 ? 1 : 0) })}</dd>
           </div>
+          {today.co2_kg !== undefined && (
+            <div className="fact fact--est">
+              <dt>
+                {t.co2_est}
+                <span className="fact__area">{area}</span>
+              </dt>
+              <dd>{fill(t.co2, { n: num(today.co2_kg, lang, today.co2_kg < 10 ? 1 : 0) })}</dd>
+            </div>
+          )}
+          {today.cost_inr !== undefined && (
+            <div className="fact fact--est fact--wide">
+              <dt>{t.cost_est}</dt>
+              <dd>{fill(t.cost, { n: num(Math.round(today.cost_inr), lang) })}</dd>
+            </div>
+          )}
         </>
       )}
     </dl>
+  )
+}
+
+export function Unavailable({ field, date, text }: { field: FieldProfile; date: string; text: Record<Lang, string> }) {
+  const t = useStrings(strings)
+  const { lang } = useLang()
+  return (
+    <section className="today today--waiting" aria-labelledby="today-h">
+      <Identity field={field} t={t} lang={lang} />
+      <h1 id="today-h" className="today__waiting-title">
+        {t.unavailable_title}
+      </h1>
+      <p className="today__reason">
+        <time dateTime={date}>{fullDate(date, lang)}</time>
+      </p>
+      <p className="today__advice">{text[lang]}</p>
+    </section>
+  )
+}
+
+function SeasonOver({ field, t, lang }: { field: FieldProfile; t: TodayStrings; lang: Lang }) {
+  return (
+    <section className="today today--waiting" aria-labelledby="today-h">
+      <Identity field={field} t={t} lang={lang} />
+      <h1 id="today-h" className="today__waiting-title">
+        {t.over_title}
+      </h1>
+      <p className="today__reason">{t.over_body}</p>
+    </section>
   )
 }
 

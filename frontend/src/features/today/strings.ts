@@ -50,6 +50,11 @@ export const strings: Strings<{
   litres: string
   pump_est: string
   units: string
+  co2_est: string
+  co2: string
+  cost_est: string
+  cost: string
+  unavailable_title: string
   for_area: string
   for_area_one: string
 
@@ -77,6 +82,8 @@ export const strings: Strings<{
   // Waiting (not sown yet)
   waiting_title: string
   waiting_first_title: string
+  over_title: string
+  over_body: string
   waiting_first_body: string
   waiting_body: string
   waiting_days: string
@@ -127,6 +134,11 @@ export const strings: Strings<{
     litres: '{n} लीटर',
     pump_est: 'पंप की बिजली, अनुमान',
     units: '{n} यूनिट',
+    co2_est: 'CO₂, अनुमान',
+    co2: '{n} किलो',
+    cost_est: 'बिजली की लागत, अनुमान (बिजली व्यवस्था पर, आपका बिल नहीं)',
+    cost: '₹{n}',
+    unavailable_title: 'आज की सलाह नहीं बन सकी',
     for_area: '{n} एकड़ के लिए',
     for_area_one: '{n} एकड़ के लिए',
 
@@ -153,6 +165,8 @@ export const strings: Strings<{
     my_field: 'मेरा गेहूँ का खेत, {area} एकड़',
     waiting_title: 'बुवाई {date} को है',
     waiting_first_title: 'पहली सलाह कल सुबह 6 बजे',
+    over_title: 'इस फ़सल का मौसम पूरा हो गया',
+    over_body: 'अब इस खेत के लिए सलाह नहीं आएगी। अगली फ़सल बोने पर खेत फिर से जोड़ें।',
     waiting_first_body: 'बुवाई {date} को हुई। हर सुबह मौसम देखकर बताएँगे कि पानी देना है या नहीं।',
     waiting_body: 'उस दिन से हर सुबह 6 बजे सलाह मिलेगी।',
     waiting_days: 'बुवाई में {n} दिन बाकी',
@@ -203,6 +217,11 @@ export const strings: Strings<{
     litres: '{n} litres',
     pump_est: 'Pump power, estimate',
     units: '{n} units (kWh)',
+    co2_est: 'CO₂, estimate',
+    co2: '{n} kg',
+    cost_est: 'Power cost, estimate (to the power system, not your bill)',
+    cost: '₹{n}',
+    unavailable_title: 'No advice today',
     for_area: 'for {n} acres',
     for_area_one: 'for {n} acre',
 
@@ -229,6 +248,8 @@ export const strings: Strings<{
     my_field: 'My wheat field, {area} acres',
     waiting_title: 'Sowing is on {date}',
     waiting_first_title: 'First advice tomorrow at 6 am',
+    over_title: 'This crop\'s season is over',
+    over_body: 'There will be no more advice for this field. Add the field again when you sow the next crop.',
     waiting_first_body: 'Sown on {date}. Every morning we check the weather and tell you whether to water.',
     waiting_body: 'From that day you get advice every morning at 6.',
     waiting_days: '{n} days to sowing',
