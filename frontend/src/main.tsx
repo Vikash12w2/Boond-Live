@@ -10,6 +10,15 @@ import './index.css'
 import App from './App.tsx'
 import { LangProvider } from './LangProvider.tsx'
 
+// The service worker shows push notifications (public/sw.js). Without it the page still works.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      /* push unavailable on this browser */
+    })
+  })
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <LangProvider>
