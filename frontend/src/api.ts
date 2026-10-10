@@ -38,6 +38,35 @@ export async function registerField(body: RegisterBody): Promise<string> {
   return res.field_token
 }
 
+export type CheckInType = 'WATERED' | 'RAIN'
+
+// A farmer check-in for a past day or today (YYYY-MM-DD, India time). The backend
+// stores it and recomputes the advice, so reload the field afterwards.
+export async function postEvent(token: string, event: { type: CheckInType; level: string; date: string }): Promise<void> {
+  await getJson(`${API_BASE}/fields/${encodeURIComponent(token)}/events`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(event),
+  })
+}
+
+// "Delete my data": removes every item of the field on the server.
+export async function deleteField(token: string): Promise<void> {
+  await getJson(`${API_BASE}/fields/${encodeURIComponent(token)}`, { method: 'DELETE' })
+}
+
+export function fetchConfig(): Promise<{ vapid_public_key: string }> {
+  return getJson(`${API_BASE}/config`)
+}
+
+export async function savePushSubscription(token: string, subscription: PushSubscriptionJSON): Promise<void> {
+  await getJson(`${API_BASE}/fields/${encodeURIComponent(token)}/push-subscription`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(subscription),
+  })
+}
+
 // The backend has no GET /replay yet; the bundled replay is the same engine idea
 // run on real 2021-22 Ludhiana weather (see scripts/make_mocks.py).
 export function fetchReplay(): Promise<ReplayResponse> {
@@ -51,6 +80,13 @@ export function savedToken(): string | null {
     return localStorage.getItem(KEY)
   } catch {
     return null
+  }
+}
+export function forgetToken() {
+  try {
+    localStorage.removeItem(KEY)
+  } catch {
+    /* storage unavailable */
   }
 }
 export function saveToken(token: string) {
