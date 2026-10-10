@@ -24,3 +24,24 @@ def aws():
 def store(aws):
     table = boto3.resource("dynamodb", region_name=REGION).create_table(TableName="boond-test", **TABLE_SCHEMA)
     return Store(table)
+
+
+import io  # noqa: E402
+
+
+class FakePolly:
+    def __init__(self, fail=False):
+        self.fail, self.calls = fail, []
+
+    def synthesize_speech(self, **kwargs):
+        self.calls.append(kwargs)
+        if self.fail:
+            raise RuntimeError("polly down")
+        return {"AudioStream": io.BytesIO(b"ID3fake-mp3")}
+
+
+@pytest.fixture
+def bucket(aws):
+    s3 = boto3.client("s3", region_name=REGION)
+    s3.create_bucket(Bucket="boond-test", CreateBucketConfiguration={"LocationConstraint": REGION})
+    return s3
