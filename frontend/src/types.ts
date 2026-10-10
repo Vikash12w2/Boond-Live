@@ -14,7 +14,7 @@ export interface FieldProfile {
   id: string
   label: string // e.g. "Test field 1, Ludhiana"
   is_test: boolean // seeded/test fields must be labelled as such
-  status: 'ACTIVE' | 'WAITING'
+  status: 'ACTIVE' | 'WAITING' | 'SEASON_OVER'
   crop: 'WHEAT'
   sowing_date: string // YYYY-MM-DD
   soil: Soil
@@ -51,6 +51,9 @@ export interface Today extends EngineDay {
   audio_url: Record<Lang, string | null> // Polly MP3, null if unavailable
   generated_at: string | null // ISO timestamp; null when the backend did not record it
   weather_stale: boolean // true if a cached forecast was used
+  co2_kg?: number // CO2e of the pumping, estimate (engine; absent in the bundled samples)
+  cost_inr?: number // cost to the power system, estimate, not the farmer's bill
+  notes?: Record<Lang, string[]> // e.g. sowing outside the recommended window
 }
 
 export interface OutlookDay {
@@ -100,6 +103,7 @@ export interface FieldResponse {
   today: Today | null // null while status is WAITING (not sown yet)
   outlook: OutlookDay[] // 16 days starting tomorrow (empty while WAITING)
   history: HistoryDay[] // newest first
+  unavailable?: { date: string; text: Record<Lang, string> } // no advice could be made today (weather missing)
 }
 
 export interface ReplayDay {

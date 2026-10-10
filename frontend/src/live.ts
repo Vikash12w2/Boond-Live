@@ -5,6 +5,7 @@
 // daily job has run for the field.
 
 import soils from '../../engine/soils.json'
+import { istDate } from './format'
 import type { Action, FieldResponse, HeatRisk, Lang, OutlookDay, Soil, Stage, Today } from './types'
 
 export interface LiveOutlookRow {
@@ -16,10 +17,12 @@ export interface LiveOutlookRow {
   projected_depletion_mm?: number
   raw_mm?: number
   taw_mm?: number
+  tmax_c?: number | null // added by the backend from the forecast
+  heat_threshold_c?: number | null // added by the backend from the engine's heat windows
 }
 
 export interface LiveAdvice {
-  status?: 'WAITING' | 'ACTIVE' | 'SEASON_OVER'
+  status?: 'WAITING' | 'ACTIVE' | 'SEASON_OVER' | 'UNAVAILABLE'
   date?: string
   day_after_sowing?: number
   stage?: string // initial | development | mid | late | post_harvest
@@ -45,6 +48,10 @@ export interface LiveAdvice {
   text_en?: string
   audio_url?: string | null
   generated_at?: string
+  weather_stale?: boolean // true when yesterday's cached forecast was used
+  co2_kg?: number
+  cost_inr?: number
+  warnings_text?: Partial<Record<Lang, string[]>> // rendered sowing-window notes
 }
 
 export interface LiveField {
@@ -131,10 +138,6 @@ function rootDepthM(soil: string, tawMm: number): number {
   return tawMm / (1000 * (s.theta_fc - s.theta_wp))
 }
 
-// Today's date in India, whatever timezone the phone is set to.
-function istToday(): string {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date())
-}
 
 const PLAIN: Record<Lang, Record<Action, (mm: number) => string>> = {
   hi: {
@@ -179,7 +182,7 @@ function toOutlook(a: LiveAdvice, today: string): OutlookDay[] {
   // The engine's outlook starts today; the dashboard's starts tomorrow.
   return rows.slice(1).map((r, i) => ({
     date: r.date ?? addDays(today, i + 1),
-    tmax_c: null, // the engine reports only the forecast maximum, not daily values
+    tmax_c: r.tmax_c ?? null,
     tmin_c: null,
     rain_mm: r.rain_mm ?? 0,
     rain_prob_pct: Math.round((r.rain_prob ?? 0) * 100),
@@ -188,19 +191,20 @@ function toOutlook(a: LiveAdvice, today: string): OutlookDay[] {
     depletion_mm: r.projected_depletion_mm ?? 0,
     raw_mm: r.raw_mm ?? a.raw_mm ?? 0,
     taw_mm: r.taw_mm ?? a.taw_mm ?? 1,
-    heat_threshold_c: null,
+    heat_threshold_c: r.heat_threshold_c ?? null,
   }))
 }
 
 export function toFieldResponse(raw: LiveField): FieldResponse {
   const a = raw.latest_advice
+  const over = a?.status === 'SEASON_OVER'
   const waiting = !a || a.status === 'WAITING' || !a.action
   const soilKey = SOIL[raw.soil] ? raw.soil : 'loam'
   const field = {
     id: raw.field_token,
     label: '',
     is_test: false,
-    status: waiting ? ('WAITING' as const) : ('ACTIVE' as const),
+    status: over ? ('SEASON_OVER' as const) : waiting ? ('WAITING' as const) : ('ACTIVE' as const),
     crop: 'WHEAT' as const,
     sowing_date: raw.sowing_date,
     soil: SOIL[raw.soil] ?? 'LOAM',
@@ -211,12 +215,17 @@ export function toFieldResponse(raw: LiveField): FieldResponse {
     lon: raw.longitude,
     place: `${raw.latitude.toFixed(2)}°N, ${raw.longitude.toFixed(2)}°E`,
   }
-  if (waiting || !a) return { field, today: null, outlook: [], history: [] }
+  if (a?.status === 'UNAVAILABLE') {
+    const at = a.advice_text
+    const text = typeof at === 'object' && at ? { hi: at.hi ?? '', en: at.en ?? '' } : { hi: '', en: '' }
+    return { field, today: null, outlook: [], history: [], unavailable: { date: a.date ?? istDate(), text } }
+  }
+  if (over || waiting || !a) return { field, today: null, outlook: [], history: [] }
   // The engine reports TAW for every active upland field; the wallet cannot be
   // drawn without it, so a response that lacks it is treated as broken.
   if (a.taw_mm == null) throw new Error('advice has no taw_mm')
 
-  const date = a.date ?? istToday()
+  const date = a.date ?? istDate()
   const rows = a.outlook ?? []
   const today: Today = {
     date,
@@ -236,9 +245,13 @@ export function toFieldResponse(raw: LiveField): FieldResponse {
     litres: a.litres ?? 0,
     kwh: a.kwh ?? 0,
     advice_text: { hi: adviceText(a, 'hi'), en: adviceText(a, 'en') },
-    audio_url: { hi: a.audio_url ?? null, en: null },
+    // The backend voices only the field's own language (Polly hi-IN or en-IN).
+    audio_url: raw.language === 'en' ? { hi: null, en: a.audio_url ?? null } : { hi: a.audio_url ?? null, en: null },
     generated_at: a.generated_at ?? null,
-    weather_stale: false,
+    weather_stale: a.weather_stale === true,
+    co2_kg: a.co2_kg,
+    cost_inr: a.cost_inr,
+    notes: { hi: a.warnings_text?.hi ?? [], en: a.warnings_text?.en ?? [] },
   }
   return { field, today, outlook: toOutlook(a, date), history: [] }
 }

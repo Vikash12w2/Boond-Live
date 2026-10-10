@@ -107,7 +107,7 @@ def obj(spec):
     return lambda v, where: check(v, spec, where)
 
 
-FIELD = {'id': 'str', 'label': 'str', 'is_test': 'bool', 'status': {'ACTIVE', 'WAITING'},
+FIELD = {'id': 'str', 'label': 'str', 'is_test': 'bool', 'status': {'ACTIVE', 'WAITING', 'SEASON_OVER'},
          'crop': {'WHEAT'}, 'sowing_date': 'date', 'soil': SOILS, 'area_acres': 'num',
          'lift_m': 'num', 'pump_eff': 'num', 'lat': 'num', 'lon': 'num', 'place': 'str'}
 ENGINE_DAY = {'date': 'date', 'action': ACTIONS, 'depth_mm': 'num', 'stage': STAGES,

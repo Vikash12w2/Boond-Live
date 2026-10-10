@@ -24,5 +24,10 @@ export function fullDate(iso: string, lang: Lang): string {
   return new Intl.DateTimeFormat(locale(lang), { weekday: 'long', day: 'numeric', month: 'long' }).format(parseDate(iso))
 }
 
+// A date in India (YYYY-MM-DD), whatever timezone the phone is set to. offsetDays -1 = yesterday.
+export function istDate(offsetDays = 0): string {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date(Date.now() + offsetDays * 86_400_000))
+}
+
 // 1 mm over 1 acre = 4.05 m3 (spec 6.7)
 export const LITRES_PER_MM_ACRE = 4047
