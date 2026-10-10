@@ -114,7 +114,16 @@ engine/          decision engine (pure Python, no network)
 replay/          replay.py (spec command) and cache/ (2021-22 weather)
 tools/           fetch_weather.py (Open-Meteo download)
 docs/            DATA_GUIDE.md (sources, assumptions), ENGINE.md (backend interface)
+backend/         AWS backend: HTTP API + 06:00 IST daily job that runs the engine (see backend/README.md)
+infra/           AWS SAM template, Lambda packaging, DEPLOY.md
 ```
+
+## Backend
+
+`backend/` wraps the engine for AWS (Mumbai, `ap-south-1`): API Gateway + Lambda for the dashboard,
+EventBridge Scheduler at 06:00 IST for the daily run, DynamoDB, S3, Polly (Hindi voice Kajal), an
+optional Bedrock rewrite that is checked number by number against the engine, and Web Push.
+Details and tests: [`backend/README.md`](backend/README.md); deploy steps: [`infra/DEPLOY.md`](infra/DEPLOY.md).
 
 ## AI tools used
 
