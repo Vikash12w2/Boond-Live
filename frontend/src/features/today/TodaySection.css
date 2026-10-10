@@ -1,0 +1,586 @@
+/* Today hero: the decision, the amount, the reason, and the soil slice. */
+
+.today {
+  --act: var(--action-irrigate);
+  background: var(--surface);
+  border-block: 1px solid var(--rule);
+  /* full-bleed on phones so the soil slice and its labels get every pixel */
+  margin-inline: calc(-1 * var(--gutter));
+  padding: var(--s5) var(--gutter) var(--s6);
+}
+
+.today--irrigate {
+  --act: var(--action-irrigate);
+}
+.today--skip {
+  --act: var(--action-skip);
+}
+.today--wait {
+  --act: var(--action-wait);
+}
+.today--heat {
+  --act: var(--action-heat);
+}
+
+/* Field identity */
+.today__id {
+  display: grid;
+  gap: 2px;
+  margin-bottom: var(--s5);
+}
+
+.today__field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s1) var(--s2);
+}
+
+.today__field-name {
+  font-weight: 500;
+}
+
+.today__badge {
+  font-size: var(--step--1);
+  line-height: 1.4;
+  color: var(--mitti);
+  background: var(--mitti-tint);
+  border-radius: var(--radius-sm);
+  padding: 1px var(--s2);
+}
+
+.today__meta {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+.today__stale {
+  display: flex;
+  gap: var(--s2);
+  align-items: flex-start;
+  background: var(--kanak-tint);
+  border-radius: var(--radius-sm);
+  padding: var(--s2) var(--s3);
+  margin-bottom: var(--s5);
+  font-size: var(--step--1);
+}
+
+.today__stale svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--mitti);
+}
+
+/* Layout */
+.today__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s6);
+}
+
+/* The decision */
+.today__decision {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+}
+
+.today__action {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s3);
+  font-size: var(--step-4);
+  line-height: 1.12;
+  color: var(--act);
+  text-wrap: balance;
+}
+
+.today__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-top: 0.14em;
+  border-radius: 50%;
+  background: var(--act);
+  color: var(--surface);
+}
+
+.today__word {
+  min-width: 0;
+}
+
+/* On narrow phones the glyph sits above the word so the word keeps the full width. */
+@media (max-width: 479px) {
+  .today__action {
+    flex-direction: column;
+    gap: var(--s2);
+  }
+
+  .today__icon {
+    width: 44px;
+    height: 44px;
+    margin-top: 0;
+  }
+}
+
+.today__qualifier {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--step-1);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: var(--s1);
+}
+
+.today__amount {
+  margin-top: var(--s3);
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.today__amount-big {
+  font-size: var(--step-3);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.today__unit {
+  font-size: var(--step-1);
+  font-weight: 500;
+}
+
+.today__amount-small {
+  font-size: var(--step-0);
+  color: var(--ink-soft);
+}
+
+.today__amount--note {
+  font-size: var(--step-1);
+  font-weight: 500;
+}
+
+.today__reason {
+  margin-top: var(--s5);
+  font-size: var(--step-1);
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: var(--measure);
+}
+
+.today__advice {
+  margin-top: var(--s2);
+  color: var(--ink-soft);
+  max-width: var(--measure);
+}
+
+/* Listen */
+.listen {
+  margin-top: var(--s5);
+  width: 100%;
+  display: grid;
+  gap: var(--s2);
+  justify-items: start;
+}
+
+.listen__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s3);
+  width: 100%;
+  min-height: 56px;
+  padding: 0 var(--s5);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--nehar);
+  color: var(--surface);
+  font-size: var(--step-1);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.listen__btn:hover:not(:disabled) {
+  background: var(--nehar-deep);
+}
+
+.listen__btn:disabled {
+  background: var(--rule);
+  color: var(--ink-soft);
+  cursor: not-allowed;
+}
+
+.listen__note {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.listen__note--warn {
+  color: var(--mitti);
+  font-weight: 500;
+}
+
+/* Facts */
+.today__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s4) var(--s5);
+  margin: 0;
+  padding-top: var(--s5);
+  border-top: 1px solid var(--rule);
+}
+
+.fact {
+  min-width: 0;
+}
+
+.fact--wide {
+  grid-column: 1 / -1;
+}
+
+.fact dt {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+
+.fact__area {
+  display: block;
+}
+
+.fact dd {
+  margin: 2px 0 0;
+  font-size: var(--step-1);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.fact--heat-high dd {
+  color: var(--loo);
+  font-weight: 700;
+}
+
+/* No forecast in a heat-sensitive stage: not a warning, but never styled as safe. */
+.fact--heat-unknown dd {
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* Waiting */
+.today__waiting-title {
+  font-size: var(--step-3);
+  color: var(--ink);
+}
+
+.today--waiting .today__reason {
+  margin-top: var(--s3);
+}
+
+.today__countdown {
+  margin-top: var(--s5);
+  font-size: var(--step-1);
+  font-weight: 500;
+  color: var(--kanak);
+  color: color-mix(in srgb, var(--kanak) 70%, var(--ink));
+}
+
+/* The soil slice */
+.today__wallet-h {
+  font-size: var(--step-1);
+  margin-bottom: var(--s3);
+}
+
+.wallet {
+  display: grid;
+  grid-template-columns: calc(136px * var(--wallet-k, 1)) minmax(0, 1fr);
+  align-items: start;
+}
+
+.wallet__svg {
+  display: block;
+  overflow: visible;
+}
+
+.wallet__labels {
+  position: relative;
+}
+
+.wallet__label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  padding-left: var(--s2);
+  font-size: var(--step--1);
+  line-height: 1.35; /* room for Devanagari matras on two-line labels */
+  color: var(--ink-soft);
+}
+
+.wallet__label-strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.wallet__pct {
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--nehar);
+}
+
+.wallet__label--level > span:last-child {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.wallet__label--stress .wallet__label-strong {
+  color: var(--stress);
+}
+
+.wallet__label--after .wallet__label-strong {
+  color: var(--nehar);
+}
+
+.wallet__label--root {
+  color: var(--mitti);
+}
+
+/* SVG parts */
+.wallet__deep {
+  fill: color-mix(in srgb, var(--mitti) 48%, var(--mitti-tint));
+}
+
+.wallet__zone {
+  fill: color-mix(in srgb, var(--mitti) 20%, var(--mitti-tint));
+}
+
+.wallet__crust {
+  fill: var(--mitti);
+}
+
+.wallet__grain {
+  fill: var(--mitti);
+  opacity: 0.38;
+}
+
+.wallet__water-fill {
+  fill: var(--nehar);
+  opacity: 0.9;
+}
+
+.wallet__water-top {
+  stroke: var(--nehar-deep);
+  stroke-width: 2.5;
+}
+
+.wallet__after-bg {
+  fill: var(--nehar-tint);
+}
+
+.wallet__after-hatch {
+  stroke: var(--nehar);
+  stroke-width: 1.4;
+  opacity: 0.45;
+}
+
+.wallet__after-line {
+  stroke: var(--nehar);
+  stroke-width: 1.5;
+  stroke-dasharray: 2 3;
+}
+
+.wallet__root-edge {
+  stroke: var(--mitti);
+  stroke-width: 1;
+  stroke-dasharray: 1 3;
+}
+
+.wallet__roots path {
+  fill: none;
+  stroke: var(--mitti);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  opacity: 0.7;
+}
+
+.wallet__stress {
+  stroke: var(--stress);
+  stroke-width: var(--stress-width);
+  stroke-dasharray: var(--stress-dash);
+}
+
+/* a pale halo under the dashes so the line reads over water and soil alike */
+.wallet__stress-halo {
+  stroke: var(--surface);
+  stroke-width: 5;
+  opacity: 0.85;
+}
+
+.wallet__leader {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 1;
+}
+
+.wallet__leader--level {
+  stroke: var(--nehar);
+  stroke-width: 1.5;
+}
+
+.wallet__leader--stress {
+  stroke: var(--stress);
+  stroke-width: var(--stress-width);
+  stroke-dasharray: var(--stress-dash);
+}
+
+.wallet__leader--after {
+  stroke: var(--nehar);
+  stroke-dasharray: 2 3;
+}
+
+.wallet__leader--root {
+  stroke: var(--mitti);
+  stroke-dasharray: 1 3;
+}
+
+/* Plant */
+.wallet__leaves > path {
+  fill: none;
+  stroke: var(--ok);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.wallet__ear > path:first-child {
+  fill: color-mix(in srgb, var(--ok) 55%, var(--kanak));
+  stroke: none;
+}
+
+.wallet__ear-line,
+.wallet__awn {
+  fill: none;
+  stroke: color-mix(in srgb, var(--ok) 55%, var(--kanak));
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+.wallet__ear-line {
+  stroke: var(--surface);
+  opacity: 0.5;
+}
+
+.wallet__plant--grain_filling .wallet__ear > path:first-child,
+.wallet__plant--maturity .wallet__ear > path:first-child {
+  fill: var(--kanak);
+}
+
+.wallet__plant--grain_filling .wallet__awn,
+.wallet__plant--maturity .wallet__awn {
+  stroke: var(--kanak);
+}
+
+.wallet__plant--maturity > path {
+  stroke: color-mix(in srgb, var(--kanak) 80%, var(--mitti));
+}
+
+.wallet__seed {
+  fill: var(--kanak);
+}
+
+/* Waiting: the slice is shown full but quiet */
+.wallet--dim .wallet__svg {
+  opacity: 0.62;
+  filter: saturate(0.7);
+}
+
+.wallet--dim .wallet__water-fill {
+  opacity: 0.7;
+}
+
+/* The one orchestrated motion: water rises into the root zone, then the
+   reading and what watering adds appear. Skipped under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .wallet__water {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: wallet-fill 1.5s cubic-bezier(0.2, 0.7, 0.25, 1) 0.2s both;
+  }
+
+  .wallet__after,
+  .wallet__label--level,
+  .wallet__label--after,
+  .wallet__leader--level,
+  .wallet__leader--after {
+    animation: wallet-appear 0.5s ease-out 1.45s both;
+  }
+
+  .wallet--dim .wallet__water,
+  .wallet--dim .wallet__label--level,
+  .wallet--dim .wallet__leader--level {
+    animation: none;
+  }
+}
+
+@keyframes wallet-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes wallet-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 720px) {
+  .today {
+    margin-inline: 0;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    padding: var(--s6) var(--s7) var(--s7);
+  }
+
+  .today__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 22rem);
+    grid-template-areas:
+      'decision wallet'
+      'facts wallet';
+    column-gap: var(--s7);
+    row-gap: var(--s6);
+  }
+
+  .today__decision {
+    grid-area: decision;
+  }
+
+  .today__wallet {
+    grid-area: wallet;
+    /* the slice draws a little larger beside the decision; labels keep their size */
+    --wallet-k: 1.25;
+  }
+
+  .today__facts {
+    grid-area: facts;
+    align-self: end;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
+
+  .fact--wide {
+    grid-column: auto;
+  }
+
+  .listen__btn {
+    width: auto;
+  }
+}
