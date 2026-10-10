@@ -1,0 +1,432 @@
+{
+ "field": {
+  "id": "F-test-1",
+  "label": "Test field 1, Ludhiana (2021–22 weather)",
+  "is_test": true,
+  "status": "ACTIVE",
+  "crop": "WHEAT",
+  "sowing_date": "2021-11-10",
+  "soil": "LOAM",
+  "area_acres": 1,
+  "lift_m": 30,
+  "pump_eff": 0.4,
+  "lat": 30.9,
+  "lon": 75.85,
+  "place": "Ludhiana, Punjab"
+ },
+ "today": {
+  "date": "2022-03-16",
+  "action": "HEAT_PROTECTION",
+  "depth_mm": 25,
+  "stage": "GRAIN_FILLING",
+  "day_after_sowing": 126,
+  "heat_risk": "HIGH",
+  "rain_next_3d_mm": 0,
+  "depletion_mm": 46.7,
+  "raw_mm": 74.1,
+  "taw_mm": 130,
+  "root_depth_m": 1,
+  "water_wallet_pct": 64,
+  "reason_code": "HEAT_GRAIN_FILLING",
+  "days_to_next_irrigation": null,
+  "litres": 101175,
+  "kwh": 20.7,
+  "advice_text": {
+   "hi": "अगले तीन दिन में तेज़ गर्मी आने वाली है और फसल में दाना भर रहा है। आज शाम लगभग 25 मिमी हल्का पानी दें।",
+   "en": "Strong heat is due in the next three days while the grain is filling. Give a light irrigation of about 25 mm this evening."
+  },
+  "audio_url": {
+   "hi": null,
+   "en": null
+  },
+  "generated_at": "2022-03-16T06:00:17+05:30",
+  "weather_stale": false
+ },
+ "outlook": [
+  {
+   "date": "2022-03-17",
+   "tmax_c": 34.7,
+   "tmin_c": 16.8,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 4.85,
+   "etc_mm": 3.95,
+   "depletion_mm": 55.2,
+   "raw_mm": 77,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-18",
+   "tmax_c": 34.6,
+   "tmin_c": 21.9,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 5.13,
+   "etc_mm": 4.06,
+   "depletion_mm": 59.2,
+   "raw_mm": 76.4,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-19",
+   "tmax_c": 35.3,
+   "tmin_c": 20.2,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 4.94,
+   "etc_mm": 3.8,
+   "depletion_mm": 63,
+   "raw_mm": 77.7,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-20",
+   "tmax_c": 34.7,
+   "tmin_c": 18.6,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 4.87,
+   "etc_mm": 3.64,
+   "depletion_mm": 66.7,
+   "raw_mm": 78.6,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-21",
+   "tmax_c": 34.2,
+   "tmin_c": 18.1,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 5.25,
+   "etc_mm": 3.81,
+   "depletion_mm": 70.5,
+   "raw_mm": 77.7,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-22",
+   "tmax_c": 33.2,
+   "tmin_c": 16.5,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 5.71,
+   "etc_mm": 4.01,
+   "depletion_mm": 74.5,
+   "raw_mm": 76.6,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-23",
+   "tmax_c": 33.9,
+   "tmin_c": 18.3,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 4.93,
+   "etc_mm": 3.35,
+   "depletion_mm": 77.8,
+   "raw_mm": 80.1,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-24",
+   "tmax_c": 33.3,
+   "tmin_c": 18,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 5.05,
+   "etc_mm": 3.32,
+   "depletion_mm": 81.2,
+   "raw_mm": 80.2,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-25",
+   "tmax_c": 32.8,
+   "tmin_c": 16.1,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 6,
+   "etc_mm": 3.56,
+   "depletion_mm": 84.7,
+   "raw_mm": 77.7,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-26",
+   "tmax_c": 32.6,
+   "tmin_c": 16.1,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 5.95,
+   "etc_mm": 3.21,
+   "depletion_mm": 87.9,
+   "raw_mm": 78.5,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-27",
+   "tmax_c": 35.1,
+   "tmin_c": 16.1,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 5.72,
+   "etc_mm": 2.84,
+   "depletion_mm": 90.8,
+   "raw_mm": 79.9,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-28",
+   "tmax_c": 37.2,
+   "tmin_c": 16.6,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 5.52,
+   "etc_mm": 2.52,
+   "depletion_mm": 93.3,
+   "raw_mm": 81.2,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-29",
+   "tmax_c": 37.1,
+   "tmin_c": 20.1,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 5.85,
+   "etc_mm": 2.39,
+   "depletion_mm": 95.7,
+   "raw_mm": 80.9,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-30",
+   "tmax_c": 36.9,
+   "tmin_c": 18.1,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 5.82,
+   "etc_mm": 2.16,
+   "depletion_mm": 97.8,
+   "raw_mm": 81.7,
+   "taw_mm": 130,
+   "heat_threshold_c": 35.0
+  },
+  {
+   "date": "2022-03-31",
+   "tmax_c": 36.4,
+   "tmin_c": 20.4,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 6.23,
+   "etc_mm": 2.06,
+   "depletion_mm": 99.9,
+   "raw_mm": 81.3,
+   "taw_mm": 130,
+   "heat_threshold_c": null
+  },
+  {
+   "date": "2022-04-01",
+   "tmax_c": 34.8,
+   "tmin_c": 17.5,
+   "rain_mm": 0,
+   "rain_prob_pct": 5,
+   "et0_mm": 6.37,
+   "etc_mm": 1.9,
+   "depletion_mm": 101.8,
+   "raw_mm": 81.6,
+   "taw_mm": 130,
+   "heat_threshold_c": null
+  }
+ ],
+ "history": [
+  {
+   "date": "2022-03-15",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 67% पानी बचा है, अगला पानी लगभग 8 दिन बाद देना होगा।",
+    "en": "No irrigation needed today. The field still holds 67% of its water; the next irrigation is likely in about 8 days."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 67,
+   "reports": []
+  },
+  {
+   "date": "2022-03-14",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 70% पानी बचा है, अगला पानी लगभग 9 दिन बाद देना होगा।",
+    "en": "No irrigation needed today. The field still holds 70% of its water; the next irrigation is likely in about 9 days."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 70,
+   "reports": []
+  },
+  {
+   "date": "2022-03-13",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 73% पानी बचा है, अगला पानी लगभग 10 दिन बाद देना होगा।",
+    "en": "No irrigation needed today. The field still holds 73% of its water; the next irrigation is likely in about 10 days."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 73,
+   "reports": []
+  },
+  {
+   "date": "2022-03-12",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 77% पानी बचा है, अगला पानी लगभग 11 दिन बाद देना होगा।",
+    "en": "No irrigation needed today. The field still holds 77% of its water; the next irrigation is likely in about 11 days."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 77,
+   "reports": []
+  },
+  {
+   "date": "2022-03-11",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 80% पानी बचा है, अगला पानी लगभग 12 दिन बाद देना होगा।",
+    "en": "No irrigation needed today. The field still holds 80% of its water; the next irrigation is likely in about 12 days."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 80,
+   "reports": []
+  },
+  {
+   "date": "2022-03-10",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 83% पानी बचा है, अगला पानी लगभग 13 दिन बाद देना होगा।",
+    "en": "No irrigation needed today. The field still holds 83% of its water; the next irrigation is likely in about 13 days."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 83,
+   "reports": []
+  },
+  {
+   "date": "2022-03-09",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 86% पानी बचा है, अगला पानी लगभग 14 दिन बाद देना होगा।",
+    "en": "No irrigation needed today. The field still holds 86% of its water; the next irrigation is likely in about 14 days."
+   },
+   "delivery_status": "FAILED",
+   "water_wallet_pct": 86,
+   "reports": []
+  },
+  {
+   "date": "2022-03-08",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 90% पानी बचा है, अगला पानी लगभग 15 दिन बाद देना होगा।",
+    "en": "No irrigation needed today. The field still holds 90% of its water; the next irrigation is likely in about 15 days."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 90,
+   "reports": []
+  },
+  {
+   "date": "2022-03-07",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 92% पानी बचा है, आने वाले दो हफ़्ते पानी की ज़रूरत नहीं दिखती।",
+    "en": "No irrigation needed today. The field still holds 92% of its water; none looks necessary for the next two weeks."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 92,
+   "reports": []
+  },
+  {
+   "date": "2022-03-06",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 94% पानी बचा है, आने वाले दो हफ़्ते पानी की ज़रूरत नहीं दिखती।",
+    "en": "No irrigation needed today. The field still holds 94% of its water; none looks necessary for the next two weeks."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 94,
+   "reports": []
+  },
+  {
+   "date": "2022-03-05",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 97% पानी बचा है, आने वाले दो हफ़्ते पानी की ज़रूरत नहीं दिखती।",
+    "en": "No irrigation needed today. The field still holds 97% of its water; none looks necessary for the next two weeks."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 97,
+   "reports": []
+  },
+  {
+   "date": "2022-03-04",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 100% पानी बचा है, आने वाले दो हफ़्ते पानी की ज़रूरत नहीं दिखती।",
+    "en": "No irrigation needed today. The field still holds 100% of its water; none looks necessary for the next two weeks."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 100,
+   "reports": []
+  },
+  {
+   "date": "2022-03-03",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 96% पानी बचा है, आने वाले दो हफ़्ते पानी की ज़रूरत नहीं दिखती।",
+    "en": "No irrigation needed today. The field still holds 96% of its water; none looks necessary for the next two weeks."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 96,
+   "reports": [
+    {
+     "type": "RAIN",
+     "choice": "Little",
+     "mm_assumed": 5,
+     "at": "2022-03-03T17:59:00+05:30"
+    }
+   ]
+  },
+  {
+   "date": "2022-03-02",
+   "action": "WAIT",
+   "depth_mm": 0,
+   "advice_text": {
+    "hi": "आज पानी की ज़रूरत नहीं है। खेत में अभी 99% पानी बचा है, आने वाले दो हफ़्ते पानी की ज़रूरत नहीं दिखती।",
+    "en": "No irrigation needed today. The field still holds 99% of its water; none looks necessary for the next two weeks."
+   },
+   "delivery_status": "DELIVERED",
+   "water_wallet_pct": 99,
+   "reports": []
+  }
+ ]
+}
