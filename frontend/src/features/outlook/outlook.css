@@ -1,0 +1,229 @@
+.ol {
+  max-width: 48rem;
+  min-width: 0; /* let the chart shrink inside the page grid */
+}
+
+/* The verdict: the one sentence the chart exists to prove. */
+.ol__verdict {
+  margin-top: var(--s3);
+  padding-left: var(--s4);
+  border-left: 4px solid var(--nehar);
+  max-width: var(--measure);
+}
+
+.ol__verdict--cross,
+.ol__verdict--under {
+  border-left-color: var(--mitti);
+}
+
+.ol__verdict--safe {
+  border-left-color: var(--ok);
+}
+
+.ol__head {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: var(--leading-tight);
+}
+
+.ol__detail {
+  margin-top: var(--s1);
+  color: var(--ink-soft);
+}
+
+.ol__figure {
+  margin: var(--s5) 0 0;
+  padding: var(--s4) var(--s3) var(--s3);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  min-width: 0;
+}
+
+.ol__chart {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  touch-action: pan-y;
+  border-radius: 2px;
+}
+
+.ol__svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  cursor: crosshair;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ol__svg text,
+.ol__label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  fill: var(--ink-soft);
+}
+
+.ol__label--strong {
+  fill: var(--ink);
+  font-weight: 700;
+}
+
+.ol__label--stress {
+  fill: var(--mitti);
+  font-weight: 500;
+}
+
+.ol__label--heat {
+  fill: var(--loo);
+  font-weight: 700;
+}
+
+.ol__sky {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.ol__rain {
+  fill: var(--rain);
+}
+
+.ol__heatpill {
+  fill: var(--loo-tint);
+  stroke: var(--loo);
+  stroke-width: 1;
+}
+
+.ol__full {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.ol__base {
+  stroke: var(--ink-soft);
+  stroke-width: 1;
+  opacity: 0.6;
+}
+
+.ol__water-area {
+  fill: var(--nehar);
+  opacity: 0.16;
+}
+
+.ol__water {
+  fill: none;
+  stroke: var(--nehar);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.ol__stress {
+  fill: none;
+  stroke: var(--stress);
+  stroke-width: var(--stress-width);
+  stroke-dasharray: var(--stress-dash);
+}
+
+.ol__tick {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.ol__cross {
+  stroke: var(--ink);
+  stroke-width: 1;
+  opacity: 0.35;
+}
+
+.ol__selpt {
+  fill: var(--nehar);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.ol__crosspt {
+  fill: var(--surface);
+  stroke: var(--mitti);
+  stroke-width: 3;
+}
+
+/* Readout of the tapped day */
+.ol__readout {
+  margin-top: var(--s3);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--rule);
+  min-height: 5.5rem;
+}
+
+.ol__rdate {
+  font-weight: 700;
+}
+
+.ol__facts {
+  margin: var(--s1) 0 0;
+  display: grid;
+  gap: 2px;
+}
+
+.ol__facts dt {
+  display: inline;
+  color: var(--ink-soft);
+}
+
+.ol__facts dt::after {
+  content: ': ';
+}
+
+.ol__facts dd {
+  display: inline;
+  margin: 0;
+  font-weight: 500;
+}
+
+.ol__flag {
+  margin-left: 0.5em;
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+
+.ol__flag--below {
+  color: var(--mitti);
+  font-weight: 700;
+}
+
+.ol__flag--heat {
+  color: var(--loo);
+  font-weight: 700;
+}
+
+/* Legend */
+.ol__legend {
+  margin-top: var(--s4);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.ol__legend ul {
+  list-style: none;
+  margin: var(--s2) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s5);
+}
+
+.ol__legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+}
+
+.ol__legend svg {
+  flex: none;
+}
+
+.ol__water--dry {
+  stroke: var(--mitti);
+}
