@@ -81,6 +81,7 @@ export interface RegisterBody {
   area_acres: number
   pump_type: 'electric'
   lift_m: number
+  consent: true
 }
 
 const SOIL: Record<string, Soil> = { sandy: 'SANDY', loam: 'LOAM', clay: 'CLAY' }

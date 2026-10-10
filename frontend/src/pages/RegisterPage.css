@@ -181,3 +181,27 @@
   color: var(--ink-soft);
   margin-top: calc(-1 * var(--s4));
 }
+
+.reg__consent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--s3);
+  align-items: start;
+  padding: var(--s3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.reg__consent:has(input:checked) {
+  border-color: var(--nehar);
+  box-shadow: inset 0 0 0 1px var(--nehar);
+}
+
+.reg__consent input {
+  width: 22px;
+  height: 22px;
+  margin: 2px 0 0;
+  accent-color: var(--nehar);
+}

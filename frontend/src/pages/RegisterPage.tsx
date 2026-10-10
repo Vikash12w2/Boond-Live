@@ -41,6 +41,8 @@ const strings: Strings<{
   badLocation: string
   failed: string
   privacy: string
+  consent: string
+  needConsent: string
 }> = {
   hi: {
     title: 'अपना खेत जोड़ें',
@@ -77,6 +79,8 @@ const strings: Strings<{
     badLocation: 'यह जगह सही नहीं लगती। अक्षांश -90 से 90 और देशांतर -180 से 180 के बीच होना चाहिए।',
     failed: 'खेत नहीं जुड़ सका ({msg})। इंटरनेट जाँचें और फिर कोशिश करें।',
     privacy: 'हम सिर्फ़ खेत की लगभग जगह (1 किमी तक) और ये जवाब रखते हैं। नाम या फ़ोन नंबर नहीं।',
+    consent: 'मैं सहमत हूँ कि बूँद मेरे खेत की लगभग जगह और ये जवाब रखे, ताकि हर सुबह सलाह दे सके। मैं कभी भी अपना डेटा मिटा सकता/सकती हूँ।',
+    needConsent: 'आगे बढ़ने के लिए ऊपर सहमति पर निशान लगाएँ।',
   },
   en: {
     title: 'Add your field',
@@ -113,6 +117,8 @@ const strings: Strings<{
     badLocation: 'That location does not look right. Latitude must be between -90 and 90, longitude between -180 and 180.',
     failed: 'Could not add the field ({msg}). Check your connection and try again.',
     privacy: 'We keep only the rough field location (about 1 km) and these answers. No name or phone number.',
+    consent: 'I agree that Boond keeps my field\'s rough location and these answers so it can advise me every morning. I can delete my data at any time.',
+    needConsent: 'Tick the agreement above to continue.',
   },
 }
 
@@ -129,6 +135,7 @@ export default function RegisterPage() {
   const [soil, setSoil] = useState<SoilKey>('loam')
   const [area, setArea] = useState('1')
   const [lift, setLift] = useState('30')
+  const [consent, setConsent] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -166,6 +173,10 @@ export default function RegisterPage() {
       setError(t.badLocation)
       return
     }
+    if (!consent) {
+      setError(t.needConsent)
+      return
+    }
     setBusy(true)
     try {
       const token = await registerField({
@@ -178,6 +189,7 @@ export default function RegisterPage() {
         area_acres: Number(area),
         pump_type: 'electric',
         lift_m: Number(lift) || 30,
+        consent: true,
       })
       saveToken(token)
       window.location.hash = `#/f/${encodeURIComponent(token)}`
@@ -277,6 +289,11 @@ export default function RegisterPage() {
         <p className="reg__label">{t.pump}</p>
         <p className="reg__fixed">{t.electric}</p>
       </div>
+
+      <label className="reg__consent">
+        <input type="checkbox" required checked={consent} onChange={(e) => setConsent(e.target.checked)} />
+        <span>{t.consent}</span>
+      </label>
 
       {error && (
         <p className="reg__error" role="alert">
