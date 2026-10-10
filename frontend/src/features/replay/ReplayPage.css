@@ -1,0 +1,753 @@
+/* 2021–22 replay page. All colours come from tokens.css. */
+.rp {
+  display: grid;
+  gap: var(--s7);
+  min-width: 0;
+}
+
+/* Framing */
+.rp-head {
+  display: grid;
+  gap: var(--s3);
+  max-width: 44rem;
+}
+
+.rp-sim {
+  justify-self: start;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--s2);
+  line-height: 1.7;
+}
+
+.rp-title {
+  font-size: var(--step-2);
+  max-width: 22ch;
+}
+
+.rp-intro {
+  max-width: var(--measure);
+}
+
+.rp-meta {
+  margin: 0;
+  display: grid;
+  gap: var(--s2);
+  font-size: var(--step--1);
+}
+
+.rp-meta div {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, max-content) minmax(0, 1fr);
+  gap: var(--s3);
+}
+
+.rp-meta dt {
+  color: var(--ink-soft);
+}
+
+.rp-meta dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.rp-meta a {
+  /* a bigger tap area for the source links without moving the text */
+  padding-block: 12px;
+}
+
+.rp-meta__desc {
+  display: block;
+  color: var(--ink-soft);
+}
+
+/* The chart block: the one bold thing on the page */
+.rp-stage {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: var(--s4) var(--s3) var(--s4);
+  display: grid;
+  gap: var(--s3);
+  min-width: 0;
+}
+
+.rp-stage__top {
+  display: grid;
+  gap: var(--s2);
+  padding-left: var(--s1);
+}
+
+.rp-h2 {
+  font-size: var(--step-1);
+}
+
+.rp-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s4);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.rp-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+}
+
+.rp-key {
+  display: inline-block;
+  flex: none;
+  width: 18px;
+  height: 3px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.rp-key--boond {
+  background: var(--nehar);
+}
+
+.rp-key--base {
+  background: var(--baseline);
+}
+
+.rp-key--band {
+  height: 10px;
+  width: 16px;
+  border-radius: 0;
+  background: var(--mitti-tint);
+  border-top: 2px dashed var(--stress);
+}
+
+.rp-key--limit {
+  height: 0;
+  border-top: 1.5px solid var(--loo);
+}
+
+/* SVG */
+.rp-chart {
+  width: 100%;
+  min-width: 0;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.rp-chart__svg {
+  display: block;
+  cursor: ew-resize;
+  font-family: var(--font-ui);
+}
+
+.rp-grid,
+.rp-axis {
+  stroke: var(--rule);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.rp-tick {
+  font-size: 12px;
+  fill: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.rp-strip {
+  font-size: 13px;
+  fill: var(--ink-soft);
+}
+
+.rp-band {
+  fill: var(--mitti-tint);
+  opacity: 0.7;
+}
+
+.rp-stress {
+  fill: none;
+  stroke: var(--stress);
+  stroke-width: var(--stress-width);
+  stroke-dasharray: var(--stress-dash);
+}
+
+.rp-band__label {
+  font-size: 12px;
+  fill: var(--mitti);
+  font-weight: 500;
+}
+
+.rp-line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.rp-line--boond {
+  stroke: var(--nehar);
+  stroke-width: 2.5;
+}
+
+.rp-line--base {
+  stroke: var(--baseline);
+}
+
+.rp-dot {
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.rp-dot--boond {
+  fill: var(--nehar);
+}
+
+.rp-dot--heat,
+.rp-dot--hot,
+.rp-dot--event {
+  fill: var(--loo);
+}
+
+.rp-dot--base {
+  fill: var(--baseline);
+}
+
+.rp-rain {
+  fill: var(--rain);
+}
+
+.rp-temp {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 1.25;
+  stroke-linejoin: round;
+}
+
+.rp-limit {
+  stroke: var(--loo);
+  stroke-width: 1.5;
+}
+
+.rp-lead {
+  fill: var(--loo-tint);
+}
+
+.rp-warnline {
+  stroke: var(--loo);
+  stroke-width: 1;
+  opacity: 0.7;
+}
+
+.rp-ann text {
+  font-size: 13px;
+}
+
+.rp-ann__main {
+  fill: var(--ink);
+  font-weight: 700;
+}
+
+.rp-ann__sub {
+  fill: var(--ink-soft);
+}
+
+.rp-cursor line {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+.rp-cursor__dot {
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.rp-cursor__dot--boond {
+  fill: var(--nehar);
+}
+
+.rp-cursor__dot--base {
+  fill: var(--baseline);
+}
+
+.rp-cursor__dot--temp {
+  fill: var(--ink);
+}
+
+.rp-hit {
+  fill: transparent;
+}
+
+/* Controls */
+.rp-controls {
+  display: grid;
+  gap: var(--s3);
+}
+
+.rp-range {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap);
+  max-width: 100%;
+}
+
+.rp-range input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: var(--tap);
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rp-range input:focus-visible {
+  box-shadow: none;
+}
+
+.rp-range input::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--nehar-tint);
+}
+
+.rp-range input::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--nehar-tint);
+}
+
+.rp-range input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
+  margin-top: -11px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 4px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--ink);
+}
+
+.rp-range input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 4px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--ink);
+}
+
+.rp-range input:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 1px var(--ink), 0 0 0 4px var(--surface), 0 0 0 6px var(--nehar);
+}
+
+.rp-range input:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 1px var(--ink), 0 0 0 4px var(--surface), 0 0 0 6px var(--nehar);
+}
+
+.rp-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  padding-left: var(--s1);
+}
+
+.rp-btn {
+  min-height: var(--tap);
+  min-width: var(--tap);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s2);
+  padding: 0 var(--s4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.rp-btn:disabled {
+  color: var(--rule);
+  cursor: default;
+}
+
+.rp-btn--icon {
+  padding: 0;
+}
+
+.rp-btn--play {
+  background: var(--nehar);
+  border-color: var(--nehar);
+  color: var(--surface);
+  min-width: 7rem;
+  font-weight: 500;
+}
+
+.rp-btn--heat {
+  border-color: var(--loo);
+}
+
+.rp-btn--heat svg {
+  color: var(--loo);
+}
+
+.rp-btn--heat[aria-current='true'] {
+  background: var(--loo-tint);
+}
+
+/* Below the chart: that day + totals */
+.rp-below {
+  display: grid;
+  gap: var(--s7);
+  min-width: 0;
+}
+
+.rp-day,
+.rp-totals {
+  display: grid;
+  gap: var(--s3);
+  align-content: start;
+  min-width: 0;
+}
+
+.rp-day__date {
+  font-size: var(--step-2);
+}
+
+.rp-day__sub {
+  color: var(--ink-soft);
+  margin-top: calc(-1 * var(--s2));
+}
+
+.rp-facts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, auto));
+  justify-content: start;
+  gap: var(--s2) var(--s5);
+  padding: var(--s3) 0;
+  border-block: 1px solid var(--rule);
+}
+
+.rp-facts dt {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.rp-facts dd {
+  margin: 0;
+  font-weight: 500;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s1) var(--s2);
+}
+
+.rp-hot {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: var(--step--1);
+  font-weight: 500;
+  color: var(--loo);
+  background: var(--loo-tint);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--s2) 0 var(--s1);
+}
+
+.rp-said {
+  display: grid;
+  gap: 0;
+  padding: var(--s1) 0 var(--s1) var(--s3);
+  border-left: 4px solid var(--rp-action);
+}
+
+.rp-said--irrigate {
+  --rp-action: var(--action-irrigate);
+}
+
+.rp-said--skip {
+  --rp-action: var(--action-skip);
+}
+
+.rp-said--wait {
+  --rp-action: var(--action-wait);
+}
+
+.rp-said--heat_protection {
+  --rp-action: var(--action-heat);
+}
+
+.rp-said__label {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.rp-said__action {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: var(--leading-tight);
+  color: var(--rp-action);
+  padding-top: var(--s1);
+}
+
+.rp-said__depth {
+  font-family: var(--font-ui);
+  font-size: var(--step-1);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.rp-farmer {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 var(--s2);
+  color: var(--ink-soft);
+}
+
+.rp-farmer .rp-key {
+  align-self: center;
+}
+
+.rp-h3 {
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  font-weight: 500;
+  margin-top: var(--s3);
+}
+
+.rp-meters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s3);
+}
+
+.rp-meter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s1) var(--s3);
+  font-size: var(--step--1);
+}
+
+.rp-meter__name {
+  color: var(--ink-soft);
+}
+
+.rp-meter__value {
+  font-weight: 500;
+  font-size: var(--step-0);
+  text-align: right;
+}
+
+.rp-meter__mm {
+  font-weight: 400;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.rp-meter__flag {
+  margin-left: var(--s2);
+  font-size: var(--step--1);
+  color: var(--mitti);
+  border-bottom: 1.5px solid var(--mitti);
+}
+
+.rp-meter__track {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 12px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.rp-meter--boond .rp-meter__track {
+  background: var(--nehar-tint);
+}
+
+.rp-meter--base .rp-meter__track {
+  background: var(--baseline-tint);
+}
+
+.rp-meter__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 0 3px 3px 0;
+}
+
+.rp-meter--boond .rp-meter__fill {
+  background: var(--nehar);
+}
+
+.rp-meter--base .rp-meter__fill {
+  background: var(--baseline);
+}
+
+.rp-meter__stress {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--mitti);
+  box-shadow: 0 0 0 1px var(--surface);
+}
+
+/* Totals */
+.rp-totals__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s2) var(--s3);
+}
+
+.rp-est {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--s2);
+}
+
+.rp-verdict {
+  font-size: var(--step-1);
+  line-height: 1.35;
+  max-width: 30ch;
+}
+
+.rp-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.rp-table tr {
+  border-top: 1px solid var(--rule);
+}
+
+.rp-table th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  vertical-align: top;
+  padding: var(--s3) var(--s3) var(--s3) 0;
+  width: 9.5rem;
+}
+
+.rp-table td {
+  padding: var(--s3) 0;
+  display: grid;
+  gap: var(--s2);
+}
+
+.rp-pair {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) minmax(4.5rem, auto);
+  align-items: center;
+  gap: var(--s2);
+}
+
+.rp-pair__bar {
+  height: 10px;
+  min-width: 0;
+}
+
+.rp-pair__fill {
+  display: block;
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  min-width: 2px;
+}
+
+.rp-pair__fill--boond {
+  background: var(--nehar);
+}
+
+.rp-pair__fill--base {
+  background: var(--baseline);
+}
+
+.rp-pair__val {
+  text-align: right;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+}
+
+.rp-pair__sub {
+  display: block;
+  font-weight: 400;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+/* Notes */
+.rp-notes {
+  display: grid;
+  gap: var(--s3);
+  max-width: var(--measure);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  border-top: 1px solid var(--rule);
+  padding-top: var(--s4);
+}
+
+/* Phone: the chart block runs edge to edge to give the season every pixel */
+@media (max-width: 559px) {
+  .rp-meta div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .rp-stage {
+    margin-inline: calc(-1 * var(--gutter));
+    border-inline: 0;
+    border-radius: 0;
+    padding-inline: var(--s2);
+  }
+
+  .rp-table tr {
+    display: block;
+    padding: var(--s3) 0;
+  }
+
+  .rp-table th {
+    display: block;
+    width: auto;
+    padding: 0 0 var(--s1);
+  }
+
+  .rp-table td {
+    padding: 0;
+  }
+}
+
+@media (min-width: 720px) {
+  .rp-title {
+    font-size: var(--step-3);
+  }
+
+  .rp-stage {
+    padding: var(--s5) var(--s5) var(--s4);
+  }
+}
+
+@media (min-width: 960px) {
+  .rp-below {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--s7);
+  }
+}
