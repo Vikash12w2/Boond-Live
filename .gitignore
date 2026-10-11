@@ -5,3 +5,8 @@ __pycache__/
 .venv/
 venv/
 replay/out/
+
+# Backend local environments and build output
+backend/.venv/
+.build/
+.aws-sam/

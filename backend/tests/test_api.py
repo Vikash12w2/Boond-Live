@@ -35,10 +35,20 @@ def test_register_then_get(deps):
 def test_register_validation(deps):
     for bad in ({"latitude": 300}, {"soil": "rock"}, {"area_acres": 0}, {"lift_m": 0}, {"latitude": True},
                 {"sowing_date": "yesterday"}, {"sowing_date": "2020-11-05"}, {"consent": False},
-                {"language": "fr"}, {"crop": "paddy"}):
+                {"language": "fr"}, {"crop": "maize"}):
         status, body = call(deps, "POST", "/fields", dict(BODY, **bad))
         assert status == 400 and body["error"], bad
 
+def test_register_supports_all_four_crops(deps):
+    for crop in ("wheat", "paddy", "cotton", "sugarcane"):
+        body = dict(BODY, crop=crop)
+        status, result = call(deps, "POST", "/fields", body)
+
+        assert status == 201, (crop, result)
+
+        token = result["field_token"]
+        profile = deps.store.get_profile(token)
+        assert profile["crop"] == crop
 
 def test_register_succeeds_when_weather_is_down(deps):
     from boond.weather import WeatherUnavailable

@@ -73,6 +73,10 @@ def register(body, deps, today):
         raise BadRequest("language must be hi or en")
     if body.get("crop") != "wheat":
         raise BadRequest("crop must be wheat")
+    crop = str(body.get("crop", "")).strip().lower()
+    allowed_crops = {"wheat", "paddy", "cotton", "sugarcane"}
+    if crop not in allowed_crops:
+        raise BadRequest("crop must be wheat, paddy, cotton, or sugarcane")
     soils = farmer_soil_choices()
     if body.get("soil") not in soils:
         raise BadRequest("soil must be one of " + ", ".join(soils))
@@ -81,11 +85,15 @@ def register(body, deps, today):
         raise BadRequest("sowing_date must be within 180 days of today")
     if (today - sowing).days + 1 > get_season_length(select_profile("wheat", sowing.isoformat())):
         raise BadRequest("the wheat season for this sowing date is already over")
+    crop_profile = select_profile(crop, sowing.isoformat())
+    if (today - sowing).days + 1 > get_season_length(crop_profile):
+        raise BadRequest(f"the {crop} season for this sowing date is already over")
     profile = {
         "language": body["language"],
         "latitude": round(_number(body, "latitude", -90, 90), 2),
         "longitude": round(_number(body, "longitude", -180, 180), 2),
         "crop": "wheat",
+        "crop": crop,
         "sowing_date": sowing.isoformat(),
         "soil": body["soil"],
         "area_acres": _number(body, "area_acres", 0.1, 100),
