@@ -1,0 +1,117 @@
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shell__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s3) var(--s5);
+  padding: var(--s3) var(--gutter);
+  max-width: var(--page-max);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.shell__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  color: var(--nehar);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  min-height: var(--tap);
+}
+
+.shell__nav {
+  display: flex;
+  gap: var(--s4);
+  order: 3;
+  width: 100%;
+}
+
+.shell__nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  min-height: var(--tap);
+  display: inline-flex;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+}
+
+.shell__nav a[aria-current='page'] {
+  color: var(--ink);
+  border-bottom-color: var(--nehar);
+  font-weight: 500;
+}
+
+.shell__lang {
+  margin-left: auto;
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  /* no overflow:hidden here: it would clip the buttons' focus rings */
+}
+
+.shell__lang button {
+  background: transparent;
+  border: 0;
+  padding: 0 var(--s3);
+  min-height: var(--tap);
+  min-width: var(--tap);
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+.shell__lang button:first-child {
+  border-radius: calc(var(--radius-sm) - 1px) 0 0 calc(var(--radius-sm) - 1px);
+}
+
+.shell__lang button:last-child {
+  border-radius: 0 calc(var(--radius-sm) - 1px) calc(var(--radius-sm) - 1px) 0;
+}
+
+.shell__lang button[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--page);
+}
+
+.shell__mock {
+  max-width: var(--page-max);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  font-size: var(--step--1);
+  color: var(--mitti);
+}
+
+.shell__main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--s4) var(--gutter) var(--s7);
+}
+
+.shell__foot {
+  border-top: 1px solid var(--rule);
+  padding: var(--s5) var(--gutter);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.shell__foot p {
+  /* line up with the content column above (page-max minus its gutters) */
+  max-width: calc(var(--page-max) - 2 * var(--gutter));
+  margin: 0 auto;
+}
+
+@media (min-width: 720px) {
+  .shell__nav {
+    order: 0;
+    width: auto;
+  }
+}

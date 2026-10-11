@@ -1,0 +1,4 @@
+.field-page {
+  display: grid;
+  gap: var(--s8);
+}

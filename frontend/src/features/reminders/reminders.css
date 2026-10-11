@@ -1,0 +1,50 @@
+.reminders {
+  display: grid;
+  gap: var(--s3);
+  justify-items: start;
+  padding: var(--s5);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.reminders__title {
+  font-size: var(--step-2);
+  color: var(--ink);
+}
+
+.reminders__intro {
+  color: var(--ink-soft);
+}
+
+.reminders__btn {
+  min-height: var(--tap);
+  padding: 0 var(--s5);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--nehar);
+  color: var(--page);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reminders__btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.reminders__note--on {
+  color: var(--ok);
+  font-weight: 500;
+}
+
+.reminders__note--denied,
+.reminders__note--failed {
+  color: var(--loo);
+}
+
+.reminders__note--ios,
+.reminders__note--unsupported {
+  color: var(--ink-soft);
+}

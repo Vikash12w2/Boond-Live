@@ -1,0 +1,234 @@
+.hist {
+  max-width: 40rem;
+  min-width: 0;
+}
+
+.hist__intro {
+  color: var(--ink-soft);
+  margin-top: var(--s2);
+}
+
+.hist__list {
+  list-style: none;
+  margin: var(--s5) 0 0;
+  padding: 0;
+}
+
+/* Timeline: a rail runs through the action nodes, newest at the top. */
+.hist__day {
+  --node: 44px;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--node) minmax(0, 1fr);
+  column-gap: var(--s4);
+  padding-bottom: var(--s5);
+}
+
+/* The rail runs behind the nodes; it starts and ends at the first and last node centres. */
+.hist__day::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--node) / 2 - 1px);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--rule);
+}
+
+.hist__day:first-child::before {
+  top: calc(var(--node) / 2);
+}
+
+.hist__day:last-child::before {
+  bottom: auto;
+  height: calc(var(--node) / 2);
+}
+
+.hist__day:only-child::before {
+  display: none;
+}
+
+.hist__node {
+  width: var(--node);
+  height: var(--node);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 2px solid currentColor;
+  position: relative; /* sits above the rail */
+}
+
+.hist__body {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.hist__date {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  line-height: 1.3;
+}
+
+.hist__wd {
+  font-weight: 500;
+}
+
+.hist__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--s3);
+  margin-top: 2px;
+}
+
+.hist__word {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: var(--leading-tight);
+}
+
+.hist__depth {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.hist__wallet {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  margin-top: var(--s1);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.hist__meter {
+  width: 52px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--nehar-tint);
+  overflow: hidden;
+  flex: none;
+}
+
+.hist__meter > span {
+  display: block;
+  height: 100%;
+  background: var(--nehar);
+  border-radius: 4px;
+}
+
+.hist__advice {
+  margin-top: var(--s1);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  max-width: var(--measure);
+}
+
+.hist__delivery {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  margin-top: var(--s2);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.hist__delivery--failed {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.hist__delivery svg {
+  flex: none;
+}
+
+/* The farmer's own words: a speech bubble, set apart from Boond's advice. */
+.hist__said {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s2);
+  margin-top: var(--s3);
+  padding: var(--s2) var(--s3);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--ink);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.hist__said-icon {
+  flex: none;
+  margin-top: 0.2em;
+  color: var(--ink-soft);
+}
+
+.hist__said strong {
+  font-weight: 700;
+}
+
+/* Quiet days: one compact line. */
+.hist__day--quiet {
+  padding-bottom: var(--s3);
+}
+
+.hist__day--quiet .hist__node {
+  width: 28px;
+  height: 28px;
+  justify-self: center;
+  margin-top: calc((var(--node) - 28px) / 2);
+}
+
+.hist__day--quiet .hist__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--s3);
+  min-height: var(--node);
+  padding-top: 0;
+}
+
+.hist__day--quiet .hist__date {
+  flex: 0 0 5.75rem;
+}
+
+.hist__day--quiet .hist__meter {
+  width: 40px;
+}
+
+.hist__day--quiet .hist__head,
+.hist__day--quiet .hist__wallet {
+  margin-top: 0;
+}
+
+.hist__day--quiet .hist__word {
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  font-weight: 500;
+}
+
+.hist__toggle {
+  min-height: var(--tap);
+  padding: 0 var(--s5);
+  margin-left: calc(44px + var(--s4));
+  border: 2px solid var(--nehar);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--nehar);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.hist__toggle:hover {
+  background: var(--nehar-tint);
+}
+
+@media (max-width: 359px) {
+  .hist__day {
+    --node: 38px;
+    column-gap: var(--s3);
+  }
+  .hist__toggle {
+    margin-left: 0;
+  }
+}
