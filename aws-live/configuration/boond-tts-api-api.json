@@ -1,0 +1,29 @@
+﻿{
+    "ApiEndpoint": "https://xhp7rzeew0.execute-api.ap-southeast-2.amazonaws.com",
+    "ApiId": "xhp7rzeew0",
+    "ApiKeySelectionExpression": "$request.header.x-api-key",
+    "CorsConfiguration": {
+        "AllowCredentials": false,
+        "AllowHeaders": [
+            "content-type"
+        ],
+        "AllowMethods": [
+            "GET",
+            "POST",
+            "PATCH",
+            "DELETE",
+            "OPTIONS"
+        ],
+        "AllowOrigins": [
+            "*"
+        ],
+        "MaxAge": 300
+    },
+    "CreatedDate": "2026-10-08T18:00:31+00:00",
+    "DisableExecuteApiEndpoint": false,
+    "IpAddressType": "ipv4",
+    "Name": "boond-tts-api",
+    "ProtocolType": "HTTP",
+    "RouteSelectionExpression": "$request.method $request.path",
+    "Tags": {}
+}

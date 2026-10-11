@@ -1,0 +1,26 @@
+﻿{
+    "branches": [
+        {
+            "branchArn": "arn:aws:amplify:ap-southeast-2:036019072993:apps/d1f7juo4mqr40l/branches/frontend-dashboard",
+            "branchName": "frontend-dashboard",
+            "tags": {},
+            "stage": "PRODUCTION",
+            "displayName": "frontend-dashboard",
+            "enableNotification": false,
+            "createTime": "2026-10-10T12:45:16.332000+05:30",
+            "updateTime": "2026-10-10T15:57:42.672000+05:30",
+            "environmentVariables": {
+                "VITE_API_BASE": "https://b2fuodkdaj.execute-api.ap-southeast-2.amazonaws.com"
+            },
+            "enableAutoBuild": true,
+            "framework": "Web",
+            "activeJobId": "0000000002",
+            "totalNumberOfJobs": "0",
+            "enableBasicAuth": false,
+            "enablePerformanceMode": false,
+            "ttl": "5",
+            "enablePullRequestPreview": false,
+            "backend": {}
+        }
+    ]
+}

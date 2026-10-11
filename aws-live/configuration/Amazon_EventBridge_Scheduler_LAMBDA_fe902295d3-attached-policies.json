@@ -1,0 +1,8 @@
+﻿{
+    "AttachedPolicies": [
+        {
+            "PolicyName": "Amazon-EventBridge-Scheduler-Execution-Policy-b2c6dec7-1463-4577-b5eb-a948895412b4",
+            "PolicyArn": "arn:aws:iam::036019072993:policy/service-role/Amazon-EventBridge-Scheduler-Execution-Policy-b2c6dec7-1463-4577-b5eb-a948895412b4"
+        }
+    ]
+}

@@ -4,48 +4,7 @@ Boond Live is a daily irrigation and heat-alert service for small farms. Each mo
 
 The decision comes from a standard crop-water model (FAO-56). The language model only rewrites the engine's message, and every number it writes is checked against the engine output.
 
-> **Status: live.** Farmers register a field in the web app and get advice the same day, then every morning at 06:00 IST, with Hindi audio and push reminders. Wheat, paddy, cotton and sugarcane are supported.
-
-## Try it
-
-**Web app:** https://frontend-dashboard.d1f7juo4mqr40l.amplifyapp.com (Hindi by default, English toggle at the top)
-
-1. **खेत जोड़ें / Add field:** pick the crop, share the location, enter the sowing date, soil, field size and borewell depth, give consent.
-2. **मेरा खेत / My field:** today's action and amount, the water left in the root zone drawn as a soil cross-section, a Hindi audio button, the 16-day outlook and past advice.
-3. Tap **पानी दिया / I watered** or **बारिश हुई / It rained**; the balance and the advice update at once.
-4. **2021-22 की जाँच / 2021-22 check:** the validation replay below, day by day.
-
-Test fields with fixed sample data (for demos): `#/f/demo`, `#/f/irrigate`, `#/f/skip`, `#/f/wait`, `#/f/heat`, `#/f/waiting`. They are labelled as test fields.
-
-## How it runs on AWS
-
-```
-Amplify Hosting (web app) ──► API Gateway HTTP API ──► Lambda (API)
-                                                          │
-EventBridge Scheduler 06:00 IST ──► Lambda (daily job) ───┤
-                                                          ▼
-              Open-Meteo forecast ─► engine (FAO-56) ─► DynamoDB (fields, daily ledger, check-ins)
-                                          │
-                     Bedrock (rewrites the text, numbers checked) ─► Polly (Hindi audio) ─► S3
-                                          │
-                                   Web Push reminder (keys in SSM Parameter Store)
-```
-
-| Service | Role |
-|---|---|
-| AWS Amplify Hosting | Builds and hosts the web app from `frontend/` |
-| Amazon API Gateway (HTTP API) | Register, read, check-in, delete, push subscription, config |
-| AWS Lambda | API handlers and the daily job |
-| Amazon EventBridge Scheduler | Runs the daily job at 06:00 IST |
-| Amazon DynamoDB | Field profiles, daily advice ledger, check-ins, push subscriptions |
-| Amazon Bedrock | Rewrites the engine's message in plain Hindi or English when a model is configured; if any number changes, the tested template text is used |
-| Amazon Polly | Hindi and English audio of the advice |
-| Amazon S3 | Weather cache and audio files (served by presigned URL) |
-| AWS Systems Manager Parameter Store | Web Push (VAPID) keys |
-| Amazon CloudWatch | Logs for every function |
-| AWS SAM | The whole backend as one template, deployed with one command |
-
-The engine decides; the language model only explains. The backend code and SAM template are on the `backend` branch (`backend/`, `infra/`, deploy guide in `infra/DEPLOY.md`).
+> **Status:** the decision engine is complete and tested (this repository). The AWS pipeline (daily job, storage, Web Push, Hindi audio) and the web app are the next stage.
 
 ## What is real and what is modelled
 
@@ -152,7 +111,6 @@ engine/          decision engine (pure Python, no network)
   replay.py, simulate.py, baseline.json   validation replay
   crops.json, soils.json, config.json, messages.json   sourced parameters
   tests/           268 tests
-frontend/        web app (React + TypeScript + Vite), Hindi-first; see frontend/README.md
 replay/          replay.py (spec command) and cache/ (2021-22 weather)
 tools/           fetch_weather.py (Open-Meteo download)
 docs/            DATA_GUIDE.md (sources, assumptions), ENGINE.md (backend interface)

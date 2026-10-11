@@ -1,0 +1,20 @@
+﻿{
+    "RoleName": "boond-ApiFunctionRole-Fy05wOfx1Dhi",
+    "PolicyName": "ApiFunctionRolePolicy3",
+    "PolicyDocument": {
+        "Statement": [
+            {
+                "Action": "polly:SynthesizeSpeech",
+                "Resource": "*",
+                "Effect": "Allow"
+            },
+            {
+                "Action": [
+                    "bedrock:InvokeModel"
+                ],
+                "Resource": "*",
+                "Effect": "Allow"
+            }
+        ]
+    }
+}
