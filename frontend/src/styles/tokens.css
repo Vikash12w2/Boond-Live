@@ -1,0 +1,70 @@
+/* Boond design tokens. Every colour has a job; do not add decorative colours. */
+:root {
+  /* Base */
+  --page: #f1f4f2; /* field mist: cool, not cream */
+  --surface: #ffffff;
+  --ink: #22302b; /* deep field green, primary text */
+  --ink-soft: #4d5c56; /* secondary text, passes 4.5:1 on --page */
+  --rule: #cfd8d3; /* hairlines and quiet borders */
+
+  /* Subject colours */
+  --nehar: #1d5c8c; /* canal water: water, irrigation, primary actions */
+  --nehar-tint: #d6e6f2;
+  --nehar-deep: #123d5e;
+  --kanak: #b8891a; /* wheat: crop stage, season */
+  --kanak-tint: #f3e8c9;
+  --mitti: #6b4a2e; /* soil: the soil column, dry soil */
+  --mitti-tint: #e8dccf;
+  --loo: #b8321f; /* hot wind: heat warnings only */
+  --loo-tint: #f6dcd6;
+  --ok: #2f6b3f; /* healthy balance / wait */
+  --ok-tint: #dbeadf;
+
+  --rain: #4a8cc4; /* rain from the sky: lighter than --nehar; opacity carries the chance */
+
+  /* The stress line (RAW): one look everywhere it is drawn, named "दबाव-रेखा" */
+  --stress: var(--mitti);
+  --stress-width: 2px;
+  --stress-dash: 6 4;
+
+  /* The fixed-calendar farmer in comparisons: a quiet grey, never a subject colour */
+  --baseline: #76837d;
+  --baseline-tint: #e2e7e4;
+
+  /* Action colours (always paired with a word and an icon, never colour alone) */
+  --action-irrigate: var(--nehar);
+  --action-skip: var(--ok);
+  --action-wait: var(--ink-soft);
+  --action-heat: var(--loo);
+
+  /* Type */
+  --font-display: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', Georgia, serif;
+  --font-ui: 'Mukta', 'Noto Sans Devanagari', system-ui, sans-serif;
+  --step--1: 0.875rem; /* 14 */
+  --step-0: 1.0625rem; /* 17: body, slightly large for outdoor phone use */
+  --step-1: 1.25rem; /* 20 */
+  --step-2: 1.625rem; /* 26 */
+  --step-3: 2.25rem; /* 36 */
+  --step-4: 3.5rem; /* 56: the action word */
+  --leading-body: 1.55;
+  --leading-tight: 1.15;
+
+  /* Space */
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: 1rem;
+  --s5: 1.5rem;
+  --s6: 2rem;
+  --s7: 3rem;
+  --s8: 4.5rem;
+
+  --gutter: 16px;
+  --measure: 34rem; /* text column on wide screens */
+  --page-max: 72rem;
+  --radius-sm: 6px; /* chips, inputs */
+  --radius-lg: 14px; /* the hero panel only */
+  --tap: 48px; /* minimum touch target */
+
+  --focus: 0 0 0 3px var(--page), 0 0 0 5px var(--nehar);
+}

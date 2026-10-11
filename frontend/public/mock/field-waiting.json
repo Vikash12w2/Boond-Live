@@ -1,0 +1,20 @@
+{
+ "field": {
+  "id": "F-test-2",
+  "label": "Test field 2, Ludhiana",
+  "is_test": true,
+  "status": "WAITING",
+  "crop": "WHEAT",
+  "sowing_date": "2026-11-08",
+  "soil": "LOAM",
+  "area_acres": 1,
+  "lift_m": 30,
+  "pump_eff": 0.4,
+  "lat": 30.9,
+  "lon": 75.85,
+  "place": "Ludhiana, Punjab"
+ },
+ "today": null,
+ "outlook": [],
+ "history": []
+}

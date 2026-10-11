@@ -1,0 +1,76 @@
+{
+  "_meta": {
+    "about": "Baseline (fixed-calendar) irrigation schedules for the replay, written from published recommendations so the baseline is not a strawman. Day numbers count from sowing / transplanting / planting (day 1).",
+    "how_to_run": "Simulate the same weather twice: (1) apply the baseline events below to the water balance, (2) let the Boond rules decide. Compare total water, kWh, CO2e, number of irrigations and stress days (Ks < 1).",
+    "pre_sowing": "Pre-sowing irrigation is the same in both runs; do not count it as a saving.",
+    "version": "2026-10-08"
+  },
+
+  "wheat": {
+    "source": "Punjab Agricultural University, Package of Practices for Crops of Punjab - Rabi 2025-26, p.17 (https://pau.edu/content/ccil/pf/pp_rabi.pdf)",
+    "applies_to_soils": "sandy loam or heavier (PAU says advance the first irrigation on light soils)",
+    "pre_sowing_mm": 100,
+    "first_irrigation": {
+      "day_if_sown_in_october": 21,
+      "day_if_sown_later": 28,
+      "depth_mm": 50,
+      "_depth_note": "PAU: 'relatively light'. 50 mm is an ASSUMPTION; say so on the validation screen."
+    },
+    "later_irrigations_weeks_after_previous": {
+      "sown_up_to_nov_21":    [5.5, 5.5, 4],
+      "sown_nov_22_to_dec_20": [5.5, 3.5, 2],
+      "sown_dec_21_to_jan_15": [4, 3, 2]
+    },
+    "_weeks_note": "PAU gives 5-6 and 3-4 week ranges; mid-points used (ASSUMPTION). Intervals may move 2-3 days either way.",
+    "later_depth_mm": 75,
+    "rain_rule": {
+      "delay_days_per_cm_rain_until_jan_31": 5,
+      "delay_days_per_cm_rain_after_jan_31": 2,
+      "max_rain_credit_mm_per_interval": 75,
+      "_note": "PAU: for each cm of rain, extend the next interval by 5 days up to end of January and by 2 days after that. Applying this makes the baseline fair.",
+      "_note_cap": "ASSUMPTION: at most 75 mm of rain (one PAU irrigation of 7.5 cm) is credited per interval. Without a cap, the record January 2022 rain (~119 mm at Ludhiana) delays the next irrigation by ~60 days and the baseline skips almost every irrigation."
+    },
+    "stop_irrigation": { "timely_sown": "03-31", "sown_after_dec_5": "04-10" },
+    "expected_irrigations_after_sowing": 4
+  },
+
+  "paddy": {
+    "source": "PAU Package of Practices for Crops of Punjab - Kharif 2026, p.12 (https://pau.edu/content/ccil/pf/pp_kharif.pdf)",
+    "rule_based": true,
+    "continuous_ponding_days": 14,
+    "then": "irrigate 2 days after the ponded water has infiltrated",
+    "irrigation_depth_mm": 75,
+    "max_standing_water_mm": 100,
+    "stop_days_before_maturity": 15,
+    "_note": "The PAU schedule depends on the pond, so the baseline must be simulated with the paddy pond model (see DATA_GUIDE). 75 mm per irrigation is an ASSUMPTION. An alternative 'common farmer practice' baseline is continuous flooding to maturity; if you use it, label it clearly as farmer practice, not PAU advice."
+  },
+
+  "cotton": {
+    "source": "Approved Package of Practices for Cotton, Punjab State (CICR, compiled by M. Sabesh, 2006-07) and PAU Kharif 2026 (first irrigation 35-40 DAS)",
+    "pre_sowing": "heavy",
+    "first_irrigation_day": 35,
+    "interval_days": 17,
+    "_interval_note": "PAU/CICR: 2-3 weeks; 17 days used (ASSUMPTION mid-point).",
+    "depth_mm": 75,
+    "rain_reset_mm": 25,
+    "_rain_reset_note": "ASSUMPTION: a day with >= 25 mm rain restarts the interval count (the published schedule says 4-6 irrigations 'depending on seasonal rainfall' without a numeric rule).",
+    "last_irrigation_date": "09-30",
+    "expected_irrigations": [4, 6]
+  },
+
+  "sugarcane": {
+    "source": "PAU Farm Operations for April and June (7-12 day interval); TNAU Agritech Sugarcane Expert System (10-15 days summer, 25-30 days winter)",
+    "interval_days_by_month": {
+      "02": 25, "03": 15, "04": 10, "05": 10, "06": 10,
+      "07": 15, "08": 15, "09": 15,
+      "10": 20, "11": 25, "12": 30, "01": 30
+    },
+    "_interval_note": "Apr-Jun 10 d = mid of PAU's 7-12 d. Monsoon (Jul-Sep) 15 d plus rain reset and Oct-Jan 20-30 d are ASSUMPTIONS based on TNAU's summer/winter ranges.",
+    "depth_mm": 75,
+    "rain_reset_mm": 25,
+    "first_irrigation_day": 20,
+    "_first_note": "TNAU: first irrigation when 20-25% of setts have germinated, or ~20 days after planting.",
+    "stop_days_before_harvest": 30,
+    "_stop_note": "Same drying-off period as Boond (crops.json stop_irrigation): no irrigation in the last 30 days before harvest, so both runs stop on the same day."
+  }
+}
