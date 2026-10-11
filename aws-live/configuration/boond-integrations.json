@@ -1,0 +1,58 @@
+﻿{
+    "Items": [
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "1twptm4",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-2:036019072993:function:boond-ApiFunction-vt5eMr3kMeg0/invocations",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "7x5pljp",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-2:036019072993:function:boond-ApiFunction-vt5eMr3kMeg0/invocations",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "lls5pak",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-2:036019072993:function:boond-ApiFunction-vt5eMr3kMeg0/invocations",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "nqbeeu8",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-2:036019072993:function:boond-ApiFunction-vt5eMr3kMeg0/invocations",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "s1rzzal",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-2:036019072993:function:boond-ApiFunction-vt5eMr3kMeg0/invocations",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "z9wwi1m",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-2:036019072993:function:boond-ApiFunction-vt5eMr3kMeg0/invocations",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        }
+    ]
+}

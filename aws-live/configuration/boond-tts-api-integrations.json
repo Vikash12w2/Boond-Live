@@ -1,0 +1,76 @@
+﻿{
+    "Items": [
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "63a6age",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:lambda:ap-southeast-2:036019072993:function:boond-field",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "77fg0s9",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:lambda:ap-southeast-2:036019072993:function:boond-tts",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "bqhwlg3",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:lambda:ap-southeast-2:036019072993:function:boond-field-event",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "c7ffe34",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:lambda:ap-southeast-2:036019072993:function:boond-save-push",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "d1eie6e",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:lambda:ap-southeast-2:036019072993:function:boond-weather",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "e1nmqcd",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:lambda:ap-southeast-2:036019072993:function:boond-get-field",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "ewsuukt",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:lambda:ap-southeast-2:036019072993:function:boond-delete-field",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        },
+        {
+            "ConnectionType": "INTERNET",
+            "IntegrationId": "vmtu86v",
+            "IntegrationMethod": "POST",
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": "arn:aws:lambda:ap-southeast-2:036019072993:function:boond-update-field",
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+        }
+    ]
+}

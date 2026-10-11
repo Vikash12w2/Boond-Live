@@ -1,0 +1,13 @@
+﻿{
+    "FunctionName": "boond-ApiFunction-vt5eMr3kMeg0",
+    "Runtime": "python3.13",
+    "Handler": "boond.api.handler",
+    "Role": "arn:aws:iam::036019072993:role/boond-ApiFunctionRole-Fy05wOfx1Dhi",
+    "MemorySize": 512,
+    "Timeout": 29,
+    "Architectures": [
+        "x86_64"
+    ],
+    "Layers": null,
+    "LastModified": "2026-10-10T10:10:59.316+0000"
+}

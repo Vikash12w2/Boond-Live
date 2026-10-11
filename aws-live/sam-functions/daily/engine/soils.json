@@ -1,0 +1,109 @@
+{
+  "_meta": {
+    "about": "Soil water parameters for the FAO-56 water balance. theta values are volumetric (m3/m3). TAW_per_m_mm = 1000 x (theta_fc - theta_wp). Keys beginning with '_' are documentation.",
+    "source": "FAO-56 (Allen et al. 1998) Table 19, 'Typical soil water characteristics for different soil types'. Values are mid-points of the FAO ranges unless noted.",
+    "onboarding": "Show only the three 'farmer_choice: true' soils in the form (Sandy / Loam / Clay). The extra classes are for SoilGrids-based suggestions, black-soil cotton/sugarcane regions and sensitivity tests.",
+    "version": "2026-10-08"
+  },
+
+  "sandy": {
+    "theta_fc": 0.15,
+    "theta_wp": 0.06,
+    "taw_per_m_mm": 90,
+    "rew_mm": 6,
+    "tew_mm": 11,
+    "paddy_percolation_mm_per_day": 8,
+    "farmer_choice": true,
+    "label_en": "Sandy / light soil",
+    "label_hi": "रेतीली (हल्की) मिट्टी",
+    "hint_en": "Dries fast, does not hold shape when squeezed",
+    "hint_hi": "पानी जल्दी सूख जाता है, मुट्ठी में दबाने पर नहीं बँधती",
+    "_source": "Original spec values (0.15/0.06). They sit at the top of FAO 'sand' and inside 'loamy sand' (FC 0.11-0.19, WP 0.03-0.10), which matches what Punjab farmers call light soil. REW/TEW = loamy-sand mid-points. Percolation: FAO Irrigation Water Management Training Manual 3, sandy soils 8 mm/day. Hindi text needs native-speaker review."
+  },
+
+  "loam": {
+    "theta_fc": 0.25,
+    "theta_wp": 0.12,
+    "taw_per_m_mm": 130,
+    "rew_mm": 9,
+    "tew_mm": 19,
+    "paddy_percolation_mm_per_day": 5,
+    "farmer_choice": true,
+    "label_en": "Loam / medium soil",
+    "label_hi": "दोमट मिट्टी",
+    "hint_en": "Crumbly, holds shape loosely when squeezed",
+    "hint_hi": "भुरभुरी, मुट्ठी में हल्की बँधती है",
+    "_source": "FAO-56 Table 19 loam: FC 0.20-0.30, WP 0.07-0.17, REW 8-10, TEW 16-22 (mid-points). Percolation: FAO 'average soils' 5 mm/day."
+  },
+
+  "clay": {
+    "theta_fc": 0.35,
+    "theta_wp": 0.23,
+    "taw_per_m_mm": 120,
+    "rew_mm": 10,
+    "tew_mm": 25,
+    "paddy_percolation_mm_per_day": 2,
+    "farmer_choice": true,
+    "label_en": "Clay / heavy soil",
+    "label_hi": "चिकनी (भारी) मिट्टी",
+    "hint_en": "Sticky when wet, cracks when dry",
+    "hint_hi": "गीली होने पर चिपचिपी, सूखने पर दरारें पड़ती हैं",
+    "_source": "Original spec values, inside FAO-56 Table 19 clay ranges (FC 0.32-0.40, WP 0.20-0.24). FAO mid-points would give 140 mm/m; 120 mm/m is the conservative choice. REW 8-12, TEW 22-29. Percolation: FAO 'heavy clay' 2 mm/day."
+  },
+
+  "loamy_sand": {
+    "theta_fc": 0.15, "theta_wp": 0.065, "taw_per_m_mm": 85,
+    "rew_mm": 6, "tew_mm": 11.5,
+    "paddy_percolation_mm_per_day": 8,
+    "farmer_choice": false,
+    "maps_to_farmer_choice": "sandy",
+    "_source": "FAO-56 Table 19 loamy sand: FC 0.11-0.19, WP 0.03-0.10, REW 4-8, TEW 9-14."
+  },
+
+  "sandy_loam": {
+    "theta_fc": 0.23, "theta_wp": 0.11, "taw_per_m_mm": 120,
+    "rew_mm": 8, "tew_mm": 17.5,
+    "paddy_percolation_mm_per_day": 6,
+    "farmer_choice": false,
+    "maps_to_farmer_choice": "loam",
+    "_source": "FAO-56 Table 19 sandy loam: FC 0.18-0.28, WP 0.06-0.16, REW 6-10, TEW 15-20. Dominant texture at PAU Ludhiana. Percolation 6 mm/day is an ASSUMPTION between FAO's 'average' (5) and 'sandy' (8); well-puddled fields can be lower."
+  },
+
+  "silt_loam": {
+    "theta_fc": 0.29, "theta_wp": 0.15, "taw_per_m_mm": 140,
+    "rew_mm": 9.5, "tew_mm": 21.5,
+    "paddy_percolation_mm_per_day": 4,
+    "farmer_choice": false,
+    "maps_to_farmer_choice": "loam",
+    "_source": "FAO-56 Table 19 silt loam: FC 0.22-0.36, WP 0.09-0.21, REW 8-11, TEW 18-25. Percolation ASSUMPTION."
+  },
+
+  "silty_clay_loam": {
+    "theta_fc": 0.335, "theta_wp": 0.205, "taw_per_m_mm": 130,
+    "rew_mm": 9.5, "tew_mm": 24.5,
+    "paddy_percolation_mm_per_day": 3,
+    "farmer_choice": false,
+    "maps_to_farmer_choice": "clay",
+    "_source": "FAO-56 Table 19 silt clay loam: FC 0.30-0.37, WP 0.17-0.24, REW 8-11, TEW 22-27. Percolation ASSUMPTION."
+  },
+
+  "black_vertisol": {
+    "theta_fc": 0.40, "theta_wp": 0.22, "taw_per_m_mm": 180,
+    "rew_mm": 10, "tew_mm": 25,
+    "paddy_percolation_mm_per_day": 2,
+    "farmer_choice": false,
+    "maps_to_farmer_choice": "clay",
+    "label_hi": "काली मिट्टी",
+    "_source": "ASSUMPTION for deep black cotton soils (Vertisols) of Maharashtra/MP/Gujarat: FC at the top of FAO clay range (0.32-0.40), WP mid (0.20-0.24). Replace with measured values from your district (NBSS&LUP / state agricultural university soil survey) before using."
+  },
+
+  "_soilgrids_suggestion": {
+    "about": "Optional: suggest a farmer_choice soil from SoilGrids v2.0 (0-30 cm, depth-weighted). Always let the farmer override.",
+    "rules_in_order": [
+      { "if": "sand_pct >= 70", "suggest": "sandy" },
+      { "if": "clay_pct >= 40", "suggest": "clay" },
+      { "else": true, "suggest": "loam" }
+    ],
+    "_source": "ASSUMPTION: a coarse simplification of the USDA texture triangle (sand and loamy sand have >=70% sand; clay class starts at 40% clay). SoilGrids returns sand/clay in g/kg: divide by 10 for %. Resolution 250 m, so treat as a hint only."
+  }
+}

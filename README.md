@@ -4,6 +4,7 @@ Boond Live is a daily irrigation and heat-alert service for small farms. Each mo
 
 The decision comes from a standard crop-water model (FAO-56). The language model only rewrites the engine's message, and every number it writes is checked against the engine output.
 
+> **Status:** the decision engine is complete and tested (this repository). The AWS pipeline (daily job, storage, Web Push, Hindi audio) and the web app are the next stage.
 > **Status: live.** Farmers register a field in the web app and get advice the same day, then every morning at 06:00 IST, with Hindi audio and push reminders. Wheat, paddy, cotton and sugarcane are supported.
 
 ## Try it

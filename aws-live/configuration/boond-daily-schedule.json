@@ -1,0 +1,23 @@
+﻿{
+    "ActionAfterCompletion": "NONE",
+    "Arn": "arn:aws:scheduler:ap-southeast-2:036019072993:schedule/default/boond-daily-schedule",
+    "CreationDate": "2026-10-10T02:57:57.125000+05:30",
+    "Description": "",
+    "FlexibleTimeWindow": {
+        "Mode": "OFF"
+    },
+    "GroupName": "default",
+    "LastModificationDate": "2026-10-10T13:34:07.530000+05:30",
+    "Name": "boond-daily-schedule",
+    "ScheduleExpression": "cron(0 6 * * ? *)",
+    "ScheduleExpressionTimezone": "Asia/Calcutta",
+    "State": "ENABLED",
+    "Target": {
+        "Arn": "arn:aws:lambda:ap-southeast-2:036019072993:function:boond-daily-engine",
+        "RetryPolicy": {
+            "MaximumEventAgeInSeconds": 3600,
+            "MaximumRetryAttempts": 3
+        },
+        "RoleArn": "arn:aws:iam::036019072993:role/service-role/Amazon_EventBridge_Scheduler_LAMBDA_fe902295d3"
+    }
+}

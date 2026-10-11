@@ -1,0 +1,96 @@
+{
+  "_meta": {
+    "about": "Farmer-facing text for every reason_code the engine returns, in English and Hindi. Placeholders in {braces} are keys of the generate_daily_decision / generate_daily_decision_paddy output; {heat_stage} is replaced by the text in 'stages'. Render with engine.messages.render(result, lang).",
+    "review": "Hindi text needs native-speaker review before the pilot, as for the soil labels in soils.json. Keep sentences short and use mm (मिमी) as the farmer sees on the screen.",
+    "version": "2026-10-09"
+  },
+
+  "stages": {
+    "flowering":        { "en": "flowering",        "hi": "फूल आने" },
+    "grain_filling":    { "en": "grain filling",    "hi": "दाना भरने" },
+    "boll_development": { "en": "boll development", "hi": "टिंडे बनने" },
+    "formative":        { "en": "early growth",     "hi": "बढ़वार" },
+    "CRI":              { "en": "crown root initiation", "hi": "शिखर जड़ (क्राउन रूट) बनने" }
+  },
+  "_stages_note": "Hindi stage names are in the oblique form so that '{heat_stage} के समय' reads correctly (e.g. 'फूल आने के समय').",
+
+  "footer": {
+    "en": "This is advice; the final decision is yours.",
+    "hi": "यह सलाह है, अंतिम फैसला आपका है।"
+  },
+  "_footer_note": "Spec section 11: every message states that it is decision support and the farmer makes the final decision. render() appends it unless footer=False.",
+
+  "fixed_numbers": [2, 3, 5],
+  "_fixed_numbers_note": "Numbers written into the templates themselves (2 days, next 3 days, 5 cm). The Bedrock number check must allow them; see messages.allowed_numbers().",
+
+  "reasons": {
+    "HEAT_RISK_SOIL_MOIST": {
+      "en": "Heat alert: up to {max_forecast_tmax_c}°C expected during {heat_stage}. The soil is still moist, so do not irrigate today. Boond will check again tomorrow.",
+      "hi": "गर्मी की चेतावनी: {heat_stage} के समय तापमान {max_forecast_tmax_c}°C तक जा सकता है। मिट्टी में अभी नमी है, इसलिए आज सिंचाई न करें। बूंद कल फिर जाँच करेगा।"
+    },
+    "HEAT_RISK_RAIN_EXPECTED": {
+      "en": "Heat alert: up to {max_forecast_tmax_c}°C expected during {heat_stage}, but rain is likely in the next 3 days ({rain_next_3d_mm} mm forecast). No heat irrigation needed.",
+      "hi": "गर्मी की चेतावनी: {heat_stage} के समय तापमान {max_forecast_tmax_c}°C तक जा सकता है, लेकिन अगले 3 दिनों में बारिश की संभावना है ({rain_next_3d_mm} मिमी का अनुमान)। गर्मी से बचाव के लिए सिंचाई की ज़रूरत नहीं है।"
+    },
+    "HEAT_RISK": {
+      "en": "Heat alert: up to {max_forecast_tmax_c}°C expected during {heat_stage}. Give a light irrigation of about {depth_mm} mm this evening.",
+      "hi": "गर्मी की चेतावनी: {heat_stage} के समय तापमान {max_forecast_tmax_c}°C तक जा सकता है। आज शाम लगभग {depth_mm} मिमी हल्की सिंचाई करें।"
+    },
+    "CRITICAL_STAGE_IRRIGATION": {
+      "en": "Irrigate today: about {depth_mm} mm, a light irrigation at {critical_stage}. This stage needs water even when the soil still looks moist.",
+      "hi": "आज सिंचाई करें: {critical_stage} के समय लगभग {depth_mm} मिमी हल्की सिंचाई। इस अवस्था में मिट्टी नम दिखे तब भी पानी ज़रूरी है।"
+    },
+    "CRITICAL_STAGE_RAIN_EXPECTED": {
+      "en": "Skip irrigation: the {critical_stage} irrigation is due, but enough rain is expected in the next 3 days ({rain_next_3d_mm} mm forecast).",
+      "hi": "सिंचाई न करें: {critical_stage} की सिंचाई का समय है, लेकिन अगले 3 दिनों में पर्याप्त बारिश की उम्मीद है ({rain_next_3d_mm} मिमी का अनुमान)।"
+    },
+    "HEAT_RISK_KEEP_5_CM": {
+      "en": "Heat alert: up to {max_forecast_tmax_c}°C expected during {heat_stage}. Irrigate about {depth_mm} mm to keep 5 cm of water standing in the field.",
+      "hi": "गर्मी की चेतावनी: {heat_stage} के समय तापमान {max_forecast_tmax_c}°C तक जा सकता है। खेत में 5 सेमी पानी खड़ा रखने के लिए लगभग {depth_mm} मिमी सिंचाई करें।"
+    },
+    "ALREADY_PAST_RAW": {
+      "en": "Irrigate today: about {depth_mm} mm. The soil is already too dry for the crop.",
+      "hi": "आज सिंचाई करें: लगभग {depth_mm} मिमी। मिट्टी पहले ही फसल के लिए बहुत सूख चुकी है।"
+    },
+    "CROSSES_RAW_IN_2D": {
+      "en": "Irrigate today: about {depth_mm} mm. The crop will start to run short of water within {crossing_day} day(s).",
+      "hi": "आज सिंचाई करें: लगभग {depth_mm} मिमी। {crossing_day} दिन के अंदर फसल को पानी की कमी होने लगेगी।"
+    },
+    "RAINFALL_EXPECTED": {
+      "en": "Skip irrigation: enough rain is expected soon. Forecast for the next 3 days: {rain_next_3d_mm} mm.",
+      "hi": "सिंचाई न करें: जल्द ही पर्याप्त बारिश की उम्मीद है। अगले 3 दिनों का अनुमान: {rain_next_3d_mm} मिमी।"
+    },
+    "CROSSES_RAW_LATER": {
+      "en": "No irrigation today. The field will need water in about {crossing_day} days.",
+      "hi": "आज सिंचाई की ज़रूरत नहीं है। लगभग {crossing_day} दिन बाद खेत को पानी चाहिए होगा।"
+    },
+    "HEALTHY_WATER_BALANCE": {
+      "en": "No irrigation needed. The soil has enough water.",
+      "hi": "सिंचाई की ज़रूरत नहीं है। मिट्टी में पर्याप्त पानी है।"
+    },
+    "NO_FORECAST_DATA": {
+      "en": "The weather forecast is not available today. Check the soil moisture yourself before irrigating.",
+      "hi": "आज मौसम का पूर्वानुमान उपलब्ध नहीं है। सिंचाई से पहले मिट्टी की नमी खुद जाँचें।"
+    },
+    "KEEP_POND_FIRST_2_WEEKS": {
+      "en": "Irrigate about {depth_mm} mm: keep water standing in the field for the first two weeks after transplanting.",
+      "hi": "लगभग {depth_mm} मिमी सिंचाई करें: रोपाई के बाद पहले दो हफ़्ते खेत में पानी खड़ा रखें।"
+    },
+    "POND_GONE_2_DAYS": {
+      "en": "Irrigate about {depth_mm} mm: the standing water dried up 2 days ago.",
+      "hi": "लगभग {depth_mm} मिमी सिंचाई करें: खेत का खड़ा पानी 2 दिन पहले सूख चुका है।"
+    },
+    "POND_PRESENT": {
+      "en": "No irrigation needed: water is still standing in the field ({pond_mm} mm).",
+      "hi": "सिंचाई की ज़रूरत नहीं है: खेत में अभी पानी खड़ा है ({pond_mm} मिमी)।"
+    },
+    "WAITING_AFTER_POND_GONE": {
+      "en": "Do not irrigate yet: the standing water has only just dried up. Irrigate 2 days after it has gone.",
+      "hi": "अभी सिंचाई न करें: खड़ा पानी अभी-अभी सूखा है। पानी सूखने के 2 दिन बाद सिंचाई करें।"
+    },
+    "IRRIGATION_STOPPED": {
+      "en": "Stop irrigating: the crop is close to maturity.",
+      "hi": "सिंचाई बंद करें: फसल पकने के करीब है।"
+    }
+  }
+}

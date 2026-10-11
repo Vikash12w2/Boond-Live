@@ -1,0 +1,32 @@
+﻿{
+    "ApiEndpoint": "https://b2fuodkdaj.execute-api.ap-southeast-2.amazonaws.com",
+    "ApiId": "b2fuodkdaj",
+    "ApiKeySelectionExpression": "$request.header.x-api-key",
+    "CorsConfiguration": {
+        "AllowHeaders": [
+            "content-type"
+        ],
+        "AllowMethods": [
+            "GET",
+            "POST",
+            "DELETE",
+            "OPTIONS"
+        ],
+        "AllowOrigins": [
+            "https://frontend-dashboard.d1f7juo4mqr40l.amplifyapp.com"
+        ]
+    },
+    "CreatedDate": "2026-10-10T10:11:03+00:00",
+    "DisableExecuteApiEndpoint": false,
+    "IpAddressType": "ipv4",
+    "Name": "boond",
+    "ProtocolType": "HTTP",
+    "RouteSelectionExpression": "$request.method $request.path",
+    "Tags": {
+        "aws:cloudformation:stack-name": "boond",
+        "aws:cloudformation:logical-id": "HttpApi",
+        "aws:cloudformation:stack-id": "arn:aws:cloudformation:ap-southeast-2:036019072993:stack/boond/c2212f20-c492-11f1-9f86-0affdd3d1a17",
+        "httpapi:createdBy": "SAM"
+    },
+    "Version": "1.0"
+}

@@ -1,0 +1,24 @@
+﻿{
+    "RoleName": "boond-ApiFunctionRole-Fy05wOfx1Dhi",
+    "PolicyName": "ApiFunctionRolePolicy2",
+    "PolicyDocument": {
+        "Statement": [
+            {
+                "Action": [
+                    "ssm:DescribeParameters"
+                ],
+                "Resource": "*",
+                "Effect": "Allow"
+            },
+            {
+                "Action": [
+                    "ssm:GetParameters",
+                    "ssm:GetParameter",
+                    "ssm:GetParametersByPath"
+                ],
+                "Resource": "arn:aws:ssm:ap-southeast-2:036019072993:parameter/boond/vapid_private_key",
+                "Effect": "Allow"
+            }
+        ]
+    }
+}

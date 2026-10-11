@@ -1,0 +1,20 @@
+﻿{
+    "RoleName": "boond-DailyFunctionRole-Sblalekh0lpB",
+    "PolicyName": "DailyFunctionRolePolicy3",
+    "PolicyDocument": {
+        "Statement": [
+            {
+                "Action": "polly:SynthesizeSpeech",
+                "Resource": "*",
+                "Effect": "Allow"
+            },
+            {
+                "Action": [
+                    "bedrock:InvokeModel"
+                ],
+                "Resource": "*",
+                "Effect": "Allow"
+            }
+        ]
+    }
+}
