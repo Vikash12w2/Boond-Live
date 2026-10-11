@@ -75,7 +75,7 @@ export interface RegisterBody {
   language: Lang
   latitude: number
   longitude: number
-  crop: 'wheat'
+  crop: 'wheat' | 'paddy' | 'cotton' | 'sugarcane'
   sowing_date: string
   soil: 'sandy' | 'loam' | 'clay'
   area_acres: number
@@ -196,6 +196,20 @@ function toOutlook(a: LiveAdvice, today: string): OutlookDay[] {
   }))
 }
 
+
+function toCropFamily(crop: string): 'WHEAT' | 'PADDY' | 'COTTON' | 'SUGARCANE' {
+  const value = crop.toLowerCase().trim()
+
+  if (value.startsWith('paddy')) return 'PADDY'
+  if (value.startsWith('cotton')) return 'COTTON'
+  if (value.startsWith('sugarcane')) return 'SUGARCANE'
+  if (value.startsWith('wheat')) return 'WHEAT'
+
+  // Keep an explicit fallback for unknown backend values.
+  return 'WHEAT'
+}
+
+
 export function toFieldResponse(raw: LiveField): FieldResponse {
   const a = raw.latest_advice
   const over = a?.status === 'SEASON_OVER'
@@ -206,7 +220,7 @@ export function toFieldResponse(raw: LiveField): FieldResponse {
     label: '',
     is_test: false,
     status: over ? ('SEASON_OVER' as const) : waiting ? ('WAITING' as const) : ('ACTIVE' as const),
-    crop: 'WHEAT' as const,
+    crop: toCropFamily(raw.crop),
     sowing_date: raw.sowing_date,
     soil: SOIL[raw.soil] ?? 'LOAM',
     area_acres: raw.area_acres,

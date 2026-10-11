@@ -15,7 +15,7 @@ export interface FieldProfile {
   label: string // e.g. "Test field 1, Ludhiana"
   is_test: boolean // seeded/test fields must be labelled as such
   status: 'ACTIVE' | 'WAITING' | 'SEASON_OVER'
-  crop: 'WHEAT'
+  crop: 'WHEAT' | 'PADDY' | 'COTTON' | 'SUGARCANE'
   sowing_date: string // YYYY-MM-DD
   soil: Soil
   area_acres: number

@@ -45,6 +45,10 @@ export const strings: Strings<{
   heat_HIGH: string
   heat_UNKNOWN: string
   crop: string
+  crop_wheat: string
+  crop_paddy: string
+  crop_cotton: string
+  crop_sugarcane: string
   crop_value: string
   water_est: string
   litres: string
@@ -128,7 +132,11 @@ export const strings: Strings<{
     heat_MEDIUM: 'थोड़ा',
     heat_HIGH: 'ज़्यादा',
     heat_UNKNOWN: 'पता नहीं (तापमान का अनुमान नहीं मिला)',
-    crop: 'गेहूँ',
+    crop: 'फ़सल',
+    crop_wheat: 'गेहूँ',
+    crop_paddy: 'धान',
+    crop_cotton: 'कपास',
+    crop_sugarcane: 'गन्ना',
     crop_value: '{stage}, बुवाई का {n}वाँ दिन',
     water_est: 'पानी, अनुमान',
     litres: '{n} लीटर',
@@ -142,12 +150,12 @@ export const strings: Strings<{
     for_area: '{n} एकड़ के लिए',
     for_area_one: '{n} एकड़ के लिए',
 
-    stage_INITIAL: 'अंकुर निकल रहे हैं',
-    stage_TILLERING: 'कल्ले फूट रहे हैं',
-    stage_JOINTING: 'गाँठ बन रही है',
-    stage_FLOWERING: 'बालियाँ निकल रही हैं',
-    stage_GRAIN_FILLING: 'दाना भर रहा है',
-    stage_MATURITY: 'फ़सल पक रही है',
+    stage_INITIAL: 'शुरुआती बढ़वार',
+    stage_TILLERING: 'वनस्पतिक बढ़वार',
+    stage_JOINTING: 'तने की बढ़वार',
+    stage_FLOWERING: 'फूल आने की अवस्था',
+    stage_GRAIN_FILLING: 'उपज बनने की अवस्था',
+    stage_MATURITY: 'पकने की अवस्था',
 
     wallet_title: 'जड़ों में पानी',
     wallet_left: 'पानी बचा है',
@@ -162,7 +170,7 @@ export const strings: Strings<{
     wallet_aria_WAIT: 'पानी अभी रेखा से ऊपर है।',
     wallet_aria_HEAT_PROTECTION: 'हल्का पानी गर्मी में फ़सल को ठंडा रखेगा।',
 
-    my_field: 'मेरा गेहूँ का खेत, {area} एकड़',
+    my_field: 'मेरा {crop} का खेत, {area} एकड़',
     waiting_title: 'बुवाई {date} को है',
     waiting_first_title: 'पहली सलाह कल सुबह 6 बजे',
     over_title: 'इस फ़सल का मौसम पूरा हो गया',
@@ -211,7 +219,11 @@ export const strings: Strings<{
     heat_MEDIUM: 'Medium',
     heat_HIGH: 'High',
     heat_UNKNOWN: 'Unknown (no temperature forecast)',
-    crop: 'Wheat',
+    crop: 'Crop',
+    crop_wheat: 'Wheat',
+    crop_paddy: 'Paddy (Rice)',
+    crop_cotton: 'Cotton',
+    crop_sugarcane: 'Sugarcane',
     crop_value: '{stage}, day {n} after sowing',
     water_est: 'Water, estimate',
     litres: '{n} litres',
@@ -225,12 +237,12 @@ export const strings: Strings<{
     for_area: 'for {n} acres',
     for_area_one: 'for {n} acre',
 
-    stage_INITIAL: 'Sprouting',
-    stage_TILLERING: 'Tillering',
-    stage_JOINTING: 'Jointing',
-    stage_FLOWERING: 'Ears coming out',
-    stage_GRAIN_FILLING: 'Grain filling',
-    stage_MATURITY: 'Ripening',
+    stage_INITIAL: 'Early growth',
+    stage_TILLERING: 'Vegetative growth',
+    stage_JOINTING: 'Stem development',
+    stage_FLOWERING: 'Flowering',
+    stage_GRAIN_FILLING: 'Yield development',
+    stage_MATURITY: 'Maturity',
 
     wallet_title: 'Water at the roots',
     wallet_left: 'water left',
@@ -245,7 +257,7 @@ export const strings: Strings<{
     wallet_aria_WAIT: 'The water is still above the stress line.',
     wallet_aria_HEAT_PROTECTION: 'A light watering keeps the crop cool in the heat.',
 
-    my_field: 'My wheat field, {area} acres',
+    my_field: 'My {crop} field, {area} acres',
     waiting_title: 'Sowing is on {date}',
     waiting_first_title: 'First advice tomorrow at 6 am',
     over_title: 'This crop\'s season is over',

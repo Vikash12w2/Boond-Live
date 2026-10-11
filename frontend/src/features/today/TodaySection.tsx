@@ -232,7 +232,13 @@ function Identity({ field, t, lang, generatedAt }: { field: FieldProfile; t: Tod
   return (
     <div className="today__id">
       <p className="today__field">
-        <span className="today__field-name">{field.label || fill(t.my_field, { area: num(field.area_acres, lang, 1) })}</span>
+        <span className="today__field-name">
+          {field.label ||
+            fill(t.my_field, {
+              crop: t[`crop_${field.crop.toLowerCase()}` as 'crop_wheat' | 'crop_paddy' | 'crop_cotton' | 'crop_sugarcane'],
+              area: num(field.area_acres, lang, 1),
+            })}
+        </span>
         {field.is_test && <span className="today__badge">{t.test_field}</span>}
       </p>
       <p className="today__meta">
@@ -265,7 +271,14 @@ function Facts({ field, today, t, lang, pumping }: { field: FieldProfile; today:
       </div>
       <div className="fact fact--wide">
         <dt>{t.crop}</dt>
-        <dd>{fill(t.crop_value, { stage: t[`stage_${today.stage}`], n: num(today.day_after_sowing, lang) })}</dd>
+        <dd>
+          {fill(t.crop_value, {
+            stage: t[`stage_${today.stage}`],
+            n: num(today.day_after_sowing, lang),
+          })}
+          {' · '}
+          {t[`crop_${field.crop.toLowerCase()}` as 'crop_wheat' | 'crop_paddy' | 'crop_cotton' | 'crop_sugarcane']}
+        </dd>
       </div>
       {pumping && (
         <>

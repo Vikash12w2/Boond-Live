@@ -18,7 +18,10 @@ const strings: Strings<{
   lat: string
   lon: string
   crop: string
-  wheat: string
+  cropWheat: string
+  cropPaddy: string
+  cropCotton: string
+  cropSugarcane: string
   sowing: string
   sowingHint: string
   soil: string
@@ -56,7 +59,10 @@ const strings: Strings<{
     lat: 'अक्षांश (latitude)',
     lon: 'देशांतर (longitude)',
     crop: 'फ़सल',
-    wheat: 'गेहूँ',
+    cropWheat: 'गेहूँ',
+    cropPaddy: 'धान (चावल)',
+    cropCotton: 'कपास',
+    cropSugarcane: 'गन्ना',
     sowing: 'बुवाई की तारीख',
     sowingHint: 'अभी बुवाई नहीं हुई तो अंदाज़न तारीख डालें।',
     soil: 'मिट्टी कैसी है?',
@@ -94,7 +100,10 @@ const strings: Strings<{
     lat: 'Latitude',
     lon: 'Longitude',
     crop: 'Crop',
-    wheat: 'Wheat',
+    cropWheat: 'Wheat',
+    cropPaddy: 'Paddy (Rice)',
+    cropCotton: 'Cotton',
+    cropSugarcane: 'Sugarcane',
     sowing: 'Sowing date',
     sowingHint: 'Not sown yet? Enter the expected date.',
     soil: 'What is the soil like?',
@@ -132,6 +141,7 @@ export default function RegisterPage() {
   const [geo, setGeo] = useState<'idle' | 'busy' | 'ok' | 'denied'>('idle')
   const [manual, setManual] = useState(false)
   const [sowing, setSowing] = useState('')
+  const [crop, setCrop] = useState<RegisterBody['crop']>('wheat')
   const [soil, setSoil] = useState<SoilKey>('loam')
   const [area, setArea] = useState('1')
   const [lift, setLift] = useState('30')
@@ -183,7 +193,7 @@ export default function RegisterPage() {
         language: lang,
         latitude: round2(la),
         longitude: round2(lo),
-        crop: 'wheat',
+        crop,
         sowing_date: sowing,
         soil,
         area_acres: Number(area),
@@ -245,8 +255,22 @@ export default function RegisterPage() {
       </fieldset>
 
       <div className="reg__q">
-        <p className="reg__label">{t.crop}</p>
-        <p className="reg__fixed">{t.wheat}</p>
+        <label className="reg__label" htmlFor="crop">
+          {t.crop}
+        </label>
+        <select
+          id="crop"
+          value={crop}
+          onChange={(e) =>
+            setCrop(e.target.value as RegisterBody['crop'])
+          }
+          required
+        >
+          <option value="wheat">{t.cropWheat}</option>
+          <option value="paddy">{t.cropPaddy}</option>
+          <option value="cotton">{t.cropCotton}</option>
+          <option value="sugarcane">{t.cropSugarcane}</option>
+        </select>
       </div>
 
       <label className="reg__q">
