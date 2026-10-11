@@ -71,11 +71,6 @@ def register(body, deps, today):
         raise BadRequest("consent is required")
     if body.get("language") not in ("hi", "en"):
         raise BadRequest("language must be hi or en")
-<<<<<<< HEAD
-    if body.get("crop") != "wheat":
-        raise BadRequest("crop must be wheat")
-=======
->>>>>>> origin/backend
     crop = str(body.get("crop", "")).strip().lower()
     allowed_crops = {"wheat", "paddy", "cotton", "sugarcane"}
     if crop not in allowed_crops:
@@ -86,11 +81,6 @@ def register(body, deps, today):
     sowing = _date(body, "sowing_date")
     if abs(sowing - today) > SOWING_WINDOW:
         raise BadRequest("sowing_date must be within 180 days of today")
-<<<<<<< HEAD
-    if (today - sowing).days + 1 > get_season_length(select_profile("wheat", sowing.isoformat())):
-        raise BadRequest("the wheat season for this sowing date is already over")
-=======
->>>>>>> origin/backend
     crop_profile = select_profile(crop, sowing.isoformat())
     if (today - sowing).days + 1 > get_season_length(crop_profile):
         raise BadRequest(f"the {crop} season for this sowing date is already over")
@@ -98,10 +88,6 @@ def register(body, deps, today):
         "language": body["language"],
         "latitude": round(_number(body, "latitude", -90, 90), 2),
         "longitude": round(_number(body, "longitude", -180, 180), 2),
-<<<<<<< HEAD
-        "crop": "wheat",
-=======
->>>>>>> origin/backend
         "crop": crop,
         "sowing_date": sowing.isoformat(),
         "soil": body["soil"],
@@ -129,11 +115,7 @@ def add_event(token, body, deps, today):
         raise BadRequest("date must be between the sowing date and today")
     try:
         event = make_event(body["type"], str(body.get("level", "")), on.isoformat(),
-<<<<<<< HEAD
-                           select_profile("wheat", profile["sowing_date"]))
-=======
                            select_profile(profile["crop"], profile["sowing_date"]))
->>>>>>> origin/backend
     except ValueError as error:
         raise BadRequest(str(error))
     deps.store.put_event(token, event, at=now_iso())
