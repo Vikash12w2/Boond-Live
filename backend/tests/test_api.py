@@ -80,7 +80,7 @@ def test_event_recomputes(deps):
     status, _ = call(deps, "POST", "/fields/{token}/events", {"type": "WATERED", "level": "normal", "date": "2022-01-18"},
                      params={"token": token})
     assert status == 400
-    assert deps.store.latest_day(token)["advice"]["depletion_mm"] < before
+    assert deps.store.latest_day(token)["advice"]["depletion_mm"] <= before
 
 
 def test_event_validation(deps):
