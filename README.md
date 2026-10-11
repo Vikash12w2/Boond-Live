@@ -45,7 +45,7 @@ EventBridge Scheduler 06:00 IST ──► Lambda (daily job) ───┤
 | Amazon CloudWatch | Logs for every function |
 | AWS SAM | The whole backend as one template, deployed with one command |
 
-The engine decides; the language model only explains. The backend code and SAM template are on the `backend` branch (`backend/`, `infra/`, deploy guide in `infra/DEPLOY.md`).
+The engine decides; the language model only explains. The backend code is in `backend/` and the SAM template in `infra/` (deploy guide: `infra/DEPLOY.md`).
 
 ## What is real and what is modelled
 
@@ -153,6 +153,8 @@ engine/          decision engine (pure Python, no network)
   crops.json, soils.json, config.json, messages.json   sourced parameters
   tests/           268 tests
 frontend/        web app (React + TypeScript + Vite), Hindi-first; see frontend/README.md
+backend/         AWS Lambda code: HTTP API, 06:00 daily job, DynamoDB, Bedrock, Polly, Web Push; tests
+infra/           AWS SAM template, packaging script and deploy guide
 replay/          replay.py (spec command) and cache/ (2021-22 weather)
 tools/           fetch_weather.py (Open-Meteo download)
 docs/            DATA_GUIDE.md (sources, assumptions), ENGINE.md (backend interface)

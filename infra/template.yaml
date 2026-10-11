@@ -1,0 +1,165 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Boond backend - HTTP API and the 06:00 IST daily advice job (region ap-south-1).
+
+Parameters:
+  BedrockModelId:
+    Type: String
+    Default: ""
+    Description: Bedrock inference profile ID used to reword advice. Empty = engine template text only.
+  VapidPublicKey:
+    Type: String
+    Description: Web Push public key (the private key is the SSM SecureString /boond/vapid_private_key).
+  VapidContact:
+    Type: String
+    Description: "mailto: address push services can contact about this sender."
+  AllowedOrigin:
+    Type: String
+    Default: "*"
+    Description: Dashboard origin allowed by CORS (the Amplify URL once known).
+
+Conditions:
+  UseBedrock: !Not [!Equals [!Ref BedrockModelId, ""]]
+
+Globals:
+  Function:
+    Runtime: python3.13
+    Architectures: [x86_64]
+    MemorySize: 512
+    CodeUri: ../.build/lambda
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref Table
+        BUCKET_NAME: !Ref Bucket
+        BEDROCK_MODEL_ID: !Ref BedrockModelId
+        VAPID_PARAM: /boond/vapid_private_key
+        VAPID_PUBLIC_KEY: !Ref VapidPublicKey
+        VAPID_CONTACT: !Ref VapidContact
+
+Resources:
+  Table:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - {AttributeName: PK, AttributeType: S}
+        - {AttributeName: SK, AttributeType: S}
+        - {AttributeName: gsi_active, AttributeType: S}
+      KeySchema:
+        - {AttributeName: PK, KeyType: HASH}
+        - {AttributeName: SK, KeyType: RANGE}
+      GlobalSecondaryIndexes:
+        - IndexName: active
+          KeySchema:
+            - {AttributeName: gsi_active, KeyType: HASH}
+            - {AttributeName: PK, KeyType: RANGE}
+          Projection: {ProjectionType: KEYS_ONLY}
+
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault: {SSEAlgorithm: AES256}
+      LifecycleConfiguration:
+        Rules:
+          - Id: weather-30-days
+            Status: Enabled
+            Prefix: weather/
+            ExpirationInDays: 30
+
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins: [!Ref AllowedOrigin]
+        AllowMethods: [GET, POST, DELETE, OPTIONS]
+        AllowHeaders: [content-type]
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 50
+        ThrottlingRateLimit: 20
+
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: boond.api.handler
+      Timeout: 29
+      Policies:
+        - DynamoDBCrudPolicy: {TableName: !Ref Table}
+        - S3CrudPolicy: {BucketName: !Ref Bucket}
+        - SSMParameterReadPolicy: {ParameterName: boond/vapid_private_key}
+        - Statement:
+            - Effect: Allow
+              Action: polly:SynthesizeSpeech
+              Resource: "*"
+            - !If
+              - UseBedrock
+              - Effect: Allow
+                Action: [bedrock:InvokeModel]
+                Resource: "*"
+              - !Ref AWS::NoValue
+      Events:
+        Config: {Type: HttpApi, Properties: {ApiId: !Ref HttpApi, Method: GET, Path: /config}}
+        Register: {Type: HttpApi, Properties: {ApiId: !Ref HttpApi, Method: POST, Path: /fields}}
+        GetField: {Type: HttpApi, Properties: {ApiId: !Ref HttpApi, Method: GET, Path: "/fields/{token}"}}
+        AddEvent: {Type: HttpApi, Properties: {ApiId: !Ref HttpApi, Method: POST, Path: "/fields/{token}/events"}}
+        AddPush: {Type: HttpApi, Properties: {ApiId: !Ref HttpApi, Method: POST, Path: "/fields/{token}/push-subscription"}}
+        DeleteField: {Type: HttpApi, Properties: {ApiId: !Ref HttpApi, Method: DELETE, Path: "/fields/{token}"}}
+
+  DailyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: boond.daily.handler
+      Timeout: 300
+      Policies:
+        - DynamoDBCrudPolicy: {TableName: !Ref Table}
+        - S3CrudPolicy: {BucketName: !Ref Bucket}
+        - SSMParameterReadPolicy: {ParameterName: boond/vapid_private_key}
+        - Statement:
+            - Effect: Allow
+              Action: polly:SynthesizeSpeech
+              Resource: "*"
+            - !If
+              - UseBedrock
+              - Effect: Allow
+                Action: [bedrock:InvokeModel]
+                Resource: "*"
+              - !Ref AWS::NoValue
+      Events:
+        Daily:
+          Type: ScheduleV2
+          Properties:
+            Name: boond-daily
+            ScheduleExpression: cron(0 6 * * ? *)
+            ScheduleExpressionTimezone: Asia/Kolkata
+            FlexibleTimeWindow: {Mode: "OFF"}
+            RetryPolicy: {MaximumRetryAttempts: 2}
+            DeadLetterConfig: {Type: SQS}
+
+  ApiLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${ApiFunction}"
+      RetentionInDays: 14
+
+  DailyLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${DailyFunction}"
+      RetentionInDays: 14
+
+Outputs:
+  ApiUrl:
+    Description: Set as VITE_API_BASE in Amplify Hosting
+    Value: !Sub "https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com"
+  DailyFunctionName:
+    Value: !Ref DailyFunction
+  BucketName:
+    Value: !Ref Bucket
+  TableName:
+    Value: !Ref Table
