@@ -129,11 +129,7 @@ def add_event(token, body, deps, today):
         raise BadRequest("date must be between the sowing date and today")
     try:
         event = make_event(body["type"], str(body.get("level", "")), on.isoformat(),
-<<<<<<< HEAD
                            select_profile("wheat", profile["sowing_date"]))
-=======
-                           select_profile(profile["crop"], profile["sowing_date"]))
->>>>>>> origin/backend
     except ValueError as error:
         raise BadRequest(str(error))
     deps.store.put_event(token, event, at=now_iso())
