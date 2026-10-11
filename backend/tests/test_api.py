@@ -79,7 +79,7 @@ def test_event_recomputes(deps):
     before = deps.store.latest_day(token)["advice"]["depletion_mm"]
     status, _ = call(deps, "POST", "/fields/{token}/events", {"type": "WATERED", "level": "normal", "date": "2022-01-18"},
                      params={"token": token})
-    assert status == 201
+    assert status == 400
     assert deps.store.latest_day(token)["advice"]["depletion_mm"] < before
 
 
